@@ -34,7 +34,7 @@
  1. 주택청약 챗봇 프로젝트
 - 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
 - 기간 : 2022년 08월 19일 ~ 2022년 09월 02일
-- 팀명 : 집값많이올랐조(4명)
+- 인원 : 정상필 외 3명
 - 사용언어 : Python
 - 사용툴 : VSCode, Kakao I open builder
 - 프레임워크 : Flask
@@ -48,3 +48,4 @@
     - 서비스3 : 일반가점제도의 가점제를 계산기형식으로 제공
 - [PDF](https://github.com/JungBear/project/blob/main/subscoription_chatbot/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C_PPT.pdf)
 - [시연영상](https://www.youtube.com/watch?v=b3-sZf48M7U)
+- [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
