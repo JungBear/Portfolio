@@ -35,11 +35,11 @@
 - 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
 - 기간 : 2022년 08월 19일 ~ 2022년 09월 02일
 - 인원 : 정상필 외 3명
-- 사용언어 : Python
-- 사용툴 : VSCode, Kakao I open builder
-- 프레임워크 : Flask
-- DBMS : PostgreSQL
-- 플랫폼 : Heroku
+- 사용언어 : ```Python```
+- 사용툴 : ```VSCode```, ```Kakao I open builder```
+- 프레임워크 : ```Flask```
+- DBMS : ```PostgreSQL```
+- 플랫폼 : ```Heroku```
 - 라이브러리 : ```flask```, ```SQLAlchemy```,```Pandas```,```Psycopg2``` 등등
 - 내용 
     - ```Flask``` 웹 프레임워크와 ```Heroku``` 플랫폼에 배포 및 ```Postgresql```을 사용한 간단한 DB관리
