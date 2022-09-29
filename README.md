@@ -31,7 +31,16 @@
 - - -
 
  ## 프로젝트
- 1. 주택청약 챗봇 프로젝트
+1. 자율주행자동차 lv.1
+- 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
+- 기간 : 2021년 03월 ~ 2021년 06월
+- 인원 : 정상필 외 2명
+- 사용언어 : ```Python```
+
+
+- - -
+
+2. 주택청약 챗봇 프로젝트
 - 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
 - 기간 : 2022년 08월 19일 ~ 2022년 09월 02일
 - 인원 : 정상필 외 3명
@@ -49,15 +58,17 @@
 - [PDF](https://github.com/JungBear/project/blob/main/subscoription_chatbot/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C_PPT.pdf)
 - [시연영상](https://www.youtube.com/watch?v=b3-sZf48M7U)
 - [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
+- - -
+
+
+
 ### 자바 토이프로젝트
 1.  포켓몬스터 게임 구현 (자바)
 - 기간 : 2022.09.22 - 2022.09.26
-- 팀원 : 정상필 외 4명
+- 인원 : 정상필 외 4명
 - 주제 : 포켓몬스터 게임 자바로 간단하게 구현해보기
-
-#### 프로젝트 정보
-- 사용되는 언어: ```Java 11```
-- 사용된 도구:``` sts 3```
+- 사용언어: ```Java 11```
+- 사용툴:```sts 3```
 - 인코딩 : ```MS949```
 
 <details>
