@@ -60,7 +60,8 @@
 - [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
 - - -
 
-
+3. 대중교통분석 웹페이지
+- 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/21YHrBHovhzi_HigID-guGqJZ1dudZELgOAZ5g6-Ptjbs/edit?usp=sharing)
 
 ### 자바 토이프로젝트
 1.  포켓몬스터 게임 구현 (자바)
