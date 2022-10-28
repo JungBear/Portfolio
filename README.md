@@ -61,7 +61,7 @@
 - - -
 
 3. 대중교통분석 웹페이지
-- 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/21YHrBHovhzi_HigID-guGqJZ1dudZELgOAZ5g6-Ptjbs/edit?usp=sharing)
+- 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/1l38mxFCWHQZ4kRey9mxHVuxkd_HRt8uwi7zyjS6k-ew/edit#gid=901249014)
   - ver 0.1 : 기능명세서 1차 작성
   - ver 0.2 : 요구사항 디테일 및 추천장학금 추가
   - ver 0.3 : 회원가입 시 입력값에 대한 제약조건 추가
