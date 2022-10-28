@@ -62,6 +62,12 @@
 
 3. 대중교통분석 웹페이지
 - 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/21YHrBHovhzi_HigID-guGqJZ1dudZELgOAZ5g6-Ptjbs/edit?usp=sharing)
+  - ver 0.1 : 기능명세서 1차 작성
+  - ver 0.2 : 요구사항 디테일 및 추천장학금 추가
+  - ver 0.3 : 회원가입 시 입력값에 대한 제약조건 추가
+  - ver 0.4 : 댓글 crud 추가
+  - ver 0.5 : 댓글 요구사항 수정 및 모델 수정
+  - ver 0.6 : 예상시간 작성 및 역할분담
 
 ### 자바 토이프로젝트
 1.  포켓몬스터 게임 구현 (자바)
