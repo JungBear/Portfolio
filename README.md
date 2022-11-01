@@ -62,9 +62,10 @@
 3. 서울시의 교통사고 위험율을 통한 버스중앙차선 토론 커뮤니티
 - 기능명세서 : [기능명세서]()
   - ver 0.1 : 기능명세서 1차작성
+- erd : [erd](https://www.erdcloud.com/d/yRcucDitLdhnfhHik)
 
 ---
-4. 나에게 맞는 추천 장학금 웹서비스
+1. 나에게 맞는 추천 장학금 웹서비스
 - 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/1l38mxFCWHQZ4kRey9mxHVuxkd_HRt8uwi7zyjS6k-ew/edit#gid=901249014)
   - ver 0.1 : 기능명세서 1차 작성
   - ver 0.2 : 요구사항 디테일 및 추천장학금 추가
