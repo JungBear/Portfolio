@@ -59,11 +59,8 @@
 - [시연영상](https://www.youtube.com/watch?v=b3-sZf48M7U)
 - [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
 - - -
-3. 서울시의 교통사고 위험율을 통한 버스중앙차선 토론 커뮤니티
-4. - 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
-- 기능명세서 : [기능명세서]()
-  - ver 0.1 : 기능명세서 1차작성
-- erd : [erd](https://www.erdcloud.com/d/yRcucDitLdhnfhHik)
+3. 서울시의 교통사고 혼잡도와 위험률 분석 및 정보, 자유 커뮤니티- 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
+
 
 ---
 1. 나에게 맞는 추천 장학금 웹서비스
