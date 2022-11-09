@@ -60,6 +60,7 @@
 - [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
 - - -
 3. 서울시의 교통사고 위험율을 통한 버스중앙차선 토론 커뮤니티
+4. - 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
 - 기능명세서 : [기능명세서]()
   - ver 0.1 : 기능명세서 1차작성
 - erd : [erd](https://www.erdcloud.com/d/yRcucDitLdhnfhHik)
