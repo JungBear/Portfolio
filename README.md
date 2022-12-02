@@ -37,7 +37,6 @@
 - 인원 : 정상필 외 2명
 - 사용언어 : ```Python```
 
-
 - - -
 
 2. 주택청약 챗봇 프로젝트
@@ -58,19 +57,30 @@
 - [PDF](https://github.com/JungBear/project/blob/main/subscoription_chatbot/%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C_PPT.pdf)
 - [시연영상](https://www.youtube.com/watch?v=b3-sZf48M7U)
 - [메인코드](https://github.com/JungBear/project/blob/main/subscoription_chatbot/app/main.py)
-- - -
-3. 서울시의 교통사고 혼잡도와 위험률 분석 및 정보, 자유 커뮤니티- 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
 
+- - -
+
+3. 서울시의 교통사고 혼잡도 분석 및 정보, 자유 커뮤니티
+- 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
+- 기간 : 2022년 10월 24일 ~ 2022년 12월 02일
+- 인원 : 정상필 외 3명
+- 사용언어 : ```Java```, ```Python```
+- 사용툴 : ```STS4```, ```Source Tree```, ```DBeaver```
+- 프레임워크 : ```Spring Boot```,```MyBatis```,
+- 템플릿엔진 : ```Thymeleaf```
+- DBMS : ```MySQL```
+- 라이브러리 : ```jQuery```,
 
 ---
-1. 나에게 맞는 추천 장학금 웹서비스
+
+4. 나에게 맞는 추천 장학금 웹서비스
+- 
+- 
+- 
+- 
+- 
+- 
 - 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/1l38mxFCWHQZ4kRey9mxHVuxkd_HRt8uwi7zyjS6k-ew/edit#gid=901249014)
-  - ver 0.1 : 기능명세서 1차 작성
-  - ver 0.2 : 요구사항 디테일 및 추천장학금 추가
-  - ver 0.3 : 회원가입 시 입력값에 대한 제약조건 추가
-  - ver 0.4 : 댓글 crud 추가
-  - ver 0.5 : 댓글 요구사항 수정 및 모델 수정
-  - ver 0.6 : 예상시간 작성 및 역할분담
 
 ### 자바 토이프로젝트
 1.  포켓몬스터 게임 구현 (자바)
