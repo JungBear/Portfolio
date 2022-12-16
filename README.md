@@ -78,7 +78,7 @@
   - 서비스4 : 게시글 및 댓글에 대한 추천, 신고
 
 - [웹페이지](http://54.180.149.57:8080/)
-- [PDF](https://drive.google.com/drive/folders/1CmZtx5ljZIWR6BaSAEzkwOwPDpF0N5J6)
+- [PDF]()
 - [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
 ---
 
