@@ -70,7 +70,16 @@
 - 템플릿엔진 : ```Thymeleaf```
 - DBMS : ```MySQL```
 - 라이브러리 : ```jQuery```,
+- 내용
+  - ```aws```를 이용한 배포 및 ```mySql```을 사용한 DB관리
+  - 서비스1 : 원하는 시각의 한강의 다리(성산대교, 한남대교, 청담대교)들의 혼잡도 예측을 카카오맵으로 출력
+  - 서비스2 : 사용자들이 한줄로 적을 수 있는 간단한 정보게시판
+  - 서비스3 : 각종 글과 댓글,대댓글을 쓸 수 있는 자유게시판
+  - 서비스4 : 게시글 및 댓글에 대한 추천, 신고
 
+- [웹페이지](http://54.180.149.57:8080/)
+- [PDF](https://drive.google.com/drive/folders/1CmZtx5ljZIWR6BaSAEzkwOwPDpF0N5J6)
+- [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
 ---
 
 4. 나에게 맞는 추천 장학금 웹서비스
