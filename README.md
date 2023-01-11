@@ -68,10 +68,10 @@
 - 인원 : 정상필 외 3명
 - 사용언어 : ```Java```, ```Python```
 - 사용툴 : ```STS4```, ```Source Tree```, ```DBeaver```
-- 프레임워크 : ```Spring Boot```,```MyBatis```,
+- 프레임워크 : ```Spring Boot```,```MyBatis```
 - 템플릿엔진 : ```Thymeleaf```
 - DBMS : ```MySQL```
-- 라이브러리 : ```jQuery```,
+- 라이브러리 : ```jQuery```,```ajax```, ```lombok```
 - 내용
   - ```aws```를 이용한 배포 및 ```mySql```을 사용한 DB관리
   - 서비스1 : 원하는 시각의 한강의 다리(성산대교, 한남대교, 청담대교)들의 혼잡도 예측을 카카오맵으로 출력
