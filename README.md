@@ -82,16 +82,16 @@
 - [웹페이지](http://54.180.149.57:8080/)
 - [PDF]()
 - [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
+
 ---
 
-4. 나에게 맞는 추천 장학금 웹서비스(기획중)
-- 
-- 
-- 
-- 
-- 
-- 
-- 기능명세서 : [기능명세서](https://docs.google.com/spreadsheets/d/1l38mxFCWHQZ4kRey9mxHVuxkd_HRt8uwi7zyjS6k-ew/edit#gid=901249014)
+4. 서울시의 교통사고 혼잡도 분석 및 정보, 자유 커뮤니티 보수
+- 기간 : 2023년 03월 13일 ~ 
+- 인원 : 정상필
+- 내용 
+    - 로그인, 회원가입을 spring Security로 변경
+    - 로그인, 회원가입에 Oauth기능 충가
+---
 
 ### 자바 토이프로젝트
 1.  포켓몬스터 게임 구현 (자바)
