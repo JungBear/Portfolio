@@ -62,7 +62,7 @@
 
 - - -
 
-3. 서울시의 교통사고 혼잡도 분석 및 정보, 자유 커뮤니티
+3. 한강의 다리 혼잡도 분석 및 정보, 자유 커뮤니티
 - 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
 - 기간 : 2022년 10월 24일 ~ 2022년 12월 02일
 - 인원 : 정상필 외 3명
