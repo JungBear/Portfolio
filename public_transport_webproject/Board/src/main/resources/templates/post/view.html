@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+    <title>상세 페이지</title>
+</th:block>
+
+	<th:block layout:fragment="modal">
+		<div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		                </button>
+		            </div>
+		            <div class="modal-body">
+		                <form>
+		                    <div class="form-group">
+		                        <label for="modalWriter" class="col-form-label">작성자</label>
+		                        <input type="text" id="modalWriter" class="form-control" placeholder="작성자를 입력해 주세요." readonly />
+		                    </div>
+		                    <div class="form-group">
+		                        <label for="modalContent" class="col-form-label">내용</label>
+		                        <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+		                    </div>
+		                    <div class="form-group">
+		                        <input type="hidden" id="modalWriterNo" class="form-control" placeholder="작성자를 입력해 주세요." readonly value=[[${CDTO.wirterNo}]]/>
+		                    </div>
+		                </form>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light" onclick="removeModal()">취소하기</button>
+		                <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light" onclick="updateComment()">수정하기</button>
+		                <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</th:block>
+
+<th:block layout:fragment="content">
+    <div class="page_tits">
+        <h3>게시글 상세보기</h3>
+        <p class="path"><strong>현재 위치 :</strong> <span>게시판</span> <span>상세보기</span></p>
+    </div>
+
+    <div class="content">
+        <section>
+            <table class="tb tb_row">
+                <colgroup>
+                    <col style="width:10%;" /><col style="width:23%;" /><col style="width:10%;" /><col style="width:23%;" />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="row">글 유형</th>
+                        <td th:text="${post.notice == 0 ? '일반' : '공지'}"></td>
+
+                        <th scope="row">등록일</th>
+                        <td th:text="${#temporals.format( post.createdDate, 'yyyy-MM-dd HH:mm' )}"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">제목</th>
+                        <td>[[ ${post.title} ]]</td>
+
+                        <th scope="row">추천</th>
+                        <td colspan="3">[[ ${post.countGood} ]]</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">작성자</th>
+                        <td colspan="3">[[ ${post.nickname} ]]</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">내용</th>
+                        <td colspan="3">[[ ${post.content} ]]</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="btn_set">
+            	<button th:if="${userInfo.userNo} != ${post.writerNo} and  ${goodresult} == false" type="button" onclick="clickgood();" class="btn btn-outline-primary">추천<span class="badge text-bg-secondary">[[ ${post.countGood} ]]</span></button>
+            	<button th:if="${userInfo.userNo} != ${post.writerNo} and  ${goodresult} == true" type="button" onclick="clickgoodcancel();" class="btn btn-primary">추천 취소<span class="badge text-bg-secondary">[[ ${post.countGood} ]]</span></button>	
+                <a th:if="${userInfo.userNo} == ${post.writerNo}" th:href="@{/post/write.do( id=${post.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
+                <button th:if="${userInfo.userNo} == ${post.writerNo}"  type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
+                <a href="#" onClick="history.backq()" class="btns btn_bdr3 btn_mid">뒤로</a>
+                <button th:if="${userInfo.userNo} != ${post.writerNo} and  ${badresult} == false" type="button" onclick="clickbad();" class="btn btn-outline-danger">비추천<span class="badge text-bg-secondary">[[ ${post.countBad} ]]</span></button>
+                <button th:if="${userInfo.userNo} != ${post.writerNo} and  ${badresult} == true" type="button" onclick="clickbadcancel();" class="btn btn-danger">비추천 취소<span class="badge text-bg-secondary">[[ ${post.countBad} ]]</span></button>
+            </p>
+
+		<div class="comment">
+			<div class="box-content">
+			<div class="card-content">
+				<div class="clearfix">
+					<h4 class="box-title pull-left">Comment</h4>
+					<!-- /.box-title -->
+				</div>
+
+				<form class="form-horizontal form-view">
+					<div class="input-group margin-bottom-20">
+						<input type="text" id="content" class="form-control" />
+						<div class="input-group-btn">
+							<button  type="button" class="btn waves-effect waves-light" th:onclick="insertComment([[ ${post.id} ]], [[ ${post.type} ]])">
+							<i class="fa fa-commenting" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+					<ul class="notice-list">
+					<!-- 댓글부분  -->
+					</ul>
+				</form>
+			</div>
+			<!-- /.card-content -->
+		</div>
+		</div>
+            
+        </section>
+    </div> <!--/* .content */-->
+    
+</th:block>
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(function() {
+		printCommentList();
+		
+
+	});
+    
+    
+    
+    document.getElementById("content").addEventListener('keydown', event => {
+       /*  console.log(event.target.value); */
+   //   console.log(event.code);
+        if (event.code === 'Enter') {
+ //       	insertComment([[ ${post.id} ]]);
+        }
+    });
+
+    
+    /* 댓글작성 */
+    function insertComment(boardId,boardType) {
+//    	alert("insertComment 실행됨");
+    	var content = document.getElementById("content");
+//   	alert("content.value : "+content.value);
+    	if (content.value == null || content.value=='') {	//비어있으면
+//    		alert("if문안");
+    		content.setAttribute("placeholder", "댓글을 입력해 주세요.");
+    		content.focus();
+    		return false;
+    	}
+
+
+    //  alert("uri가져오기전");
+    	var uri = /*[[ @{/comments} ]]*/null;
+    	var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+    	var params = {"boardId": boardId,"boardType":boardType, "content": content.value, "writerNo": 1};
+    	
+//   	alert(JSON.stringify(params));
+    	
+    	
+//    	alert("아작스전");
+    	$.ajax({
+    		url: uri,
+    		type: "POST",
+    		headers: headers,
+    		dataType: "json",
+    		data: JSON.stringify(params),
+			
+    		success: function(response) {
+    			if (response.result == false) {
+    				alert("댓글 등록에 실패하였습니다.");
+    				return false;
+    			}
+
+    			printCommentList();
+    			content.value = "";
+    		},
+    		error: function(xhr, status, error) {
+    			console.log("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+    			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+    			return false;
+    		}
+    	});
+    }
+    
+    // modal에서 수정하기 버튼 눌렀을 때
+    function updateComment(id) {
+	
+    	var strWriterNo = document.getElementById("modalWriterNo");
+    	var writerNo = parseInt(strWriterNo);
+    	var content = document.getElementById("modalContent");
+
+    	var uri = [[ @{/comments/} ]] + id;
+    	var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH"};
+    	var params = {"id": id, "writerNo": writerNo.value, "content": content.value};
+
+    	$.ajax({
+    		url: uri,
+    		type: "PATCH",
+    		headers: headers,
+    		dataType: "json",
+    		data: JSON.stringify(params),
+    		success: function(response) {
+    			if (response.result == false) {
+    				alert("댓글 수정에 실패하였습니다.");
+    				return false;
+    			}
+
+    			printCommentList();
+    			$("#commentModal").modal("hide");
+    		},
+    		error: function(xhr, status, error) {
+    			alert("에러가 발생하였습니다.");
+    			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+    			return false;
+    		}
+    	});
+    }
+    // modal에서 댓글삭제를 눌렀을경우
+    function deleteComment(id) {
+
+    	if (!confirm('댓글을 삭제하시겠어요?')) {
+    		return false;
+    	}
+
+    	var uri = [[ @{/comments/} ]] + id;
+    	var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+
+    	$.ajax({
+    		url: uri,
+    		type: "DELETE",
+    		headers: headers,
+    		dataType: "json",
+    		success: function(response) {
+//    			alert(JSON.stringify(response.result));
+    			if (response.result == false) {
+    				alert("댓글 삭제에 실패하였습니다.");
+    				return false;
+    			}
+
+    			printCommentList();
+    			$("#commentModal").modal("hide");
+    		},
+    		error: function(xhr, status, error) {
+    			alert("에러가 발생하였습니다.");
+    			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+    			return false;
+    		}
+    	});
+    }
+    
+    	// 게시글 리스트 보여주기		
+    	function printCommentList() {
+    		var userNo = [[ ${ userInfo.userNo } ]]
+    		var uri = /*[[ @{/comments}+ '?boardId=' + ${post.id} ]]*/null;
+   			$.get(uri, function(response) {
+   				if (response!=null) {
+   					var commentsHtml = "";
+//  					alert(JSON.stringify(response));
+//   					alert(JSON.stringify(response.commentList));
+   					$(response).each(function(id, comment) {
+   						commentsHtml += `
+   							<li>
+   								<span class="nickname">${comment.nickname}</span>
+   								<span class="desc">${comment.content}</span>
+   								<span class="commentTime">${moment(comment.createdDate).format('YYYY-MM-DD HH:mm')}</span>
+   								<button th:if="${userNo} == ${comment.writerNo}" type="button" onclick="openModal(${comment.id}, '${comment.nickname}', '${comment.content}','${comment.writerNo}' )" class="btn btn-xs btn-circle"><img id="commentModify" src="https://cdn-icons-png.flaticon.com/512/3394/3394365.png" aria-hidden="true"></button>
+   								
+   							</li>
+   						`;
+   					});
+   					$(".notice-list").html(commentsHtml);
+   				}
+   			}, "json");
+   		}
+    		/*[- end of function -]*/
+    
+    		// 게시글 삭제
+    function deletePost() {
+      const id = [[ ${post.id} ]];
+      const type = [[ ${post.type} ]];
+      console.log(type);
+
+      if ( !confirm(id + '번 게시글을 삭제할까요?') ) {
+        return false;
+      }
+
+      const formHtml = `
+          <form id="deleteForm" action="/post/delete.do" method="post">
+              <input type="hidden" id="id" name="id" value="${id}" />
+           	  <input type="hidden" id="type" name="type" value="${type}" />
+          </form>
+      `;
+      const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+      const form = doc.body.firstChild;
+      document.body.append(form);
+      document.getElementById('deleteForm').submit();
+    }
+	
+    // 수정하는 버튼을 눌렀을 때 실행
+    function openModal(id, nickname, content,writerNo) {
+		var userNo = [[ ${userInfo.userNo} ]];
+		if(userNo != writerNo){
+			alert("댓글 수정 권한이 없습니다");
+			return false;
+		}
+		$("#commentModal").modal("toggle");
+
+		document.getElementById("modalWriter").value = nickname;
+		document.getElementById("modalContent").value = content;
+		
+		
+		document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment("+ id +")");
+		document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment("+ id +")");
+	}
+	
+    function removeModal(){
+    	$("#commentModal").modal("hide");
+    }
+    
+    function clickgoodcancel(){
+		var likeval = [[ ${goodresult} ]];
+		//alert(likeval);
+		//alert("추천하시겠습니까?");	
+		let boardId = [[ ${post.id} ]] ;
+		//alert(boardId + ": boardId");
+		//alert(typeof(boardId));
+		let userNo =[[ ${userInfo.userNo} ]] ;
+		//alert(userNo);
+		
+		let uri = /*[[ @{/cancelgood} ]]*/null;
+		if(likeval == true){
+			console.log(likeval + "좋아요 누름");
+				$.ajax({
+					type :'post',
+					url : uri,
+					contentType: 'application/json',
+					data :JSON.stringify(
+							{
+								"boardId" : boardId,
+								"userNo" : userNo
+							}		
+						),
+					success : function(data) {
+						alert('추천 취소가 되었습니다');
+						location.reload();
+					},
+				error: function(xhr, status, error) {
+	    			alert("현재 추천 취소를 진행할 수 없습니다. 잠시후 시도해주세요");
+	    		}
+			})// 아작스 끝
+		}
+    }
+ // 추천버튼을 눌렀을 때
+	function clickgood(){
+		var likeval = [[ ${goodresult} ]];
+//		alert(likeval);
+		//alert("추천하시겠습니까?");	
+		var boardId = [[ ${post.id} ]] ;
+		//alert(boardId + ": boardId");
+		//alert(typeof(boardId));
+		var userNo =  [[ ${userInfo.userNo} ]] ;
+		//alert(userNo);
+		
+		var uri = /*[[ @{/clickgood} ]]*/null;
+		//var params = {"boardId" : boardid, "userNo": userno}
+		var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+		//alert(JSON.stringify(params));
+		
+		if(likeval == false){
+			$.ajax({
+				type :'post',
+				url : uri,
+				contentType: 'application/json',
+				data :JSON.stringify(
+						{
+							"boardId" : boardId,
+							"userNo" : userNo
+						}		
+					),
+					success : function(data) {
+						alert('추천하였습니다.');
+						location.reload();
+					},
+					error: function(xhr, status, error) {
+		    			//alert("해당 게시물에는 추천을 할 수 없습니다. 비추천 취소를 누르고 다시 진행해주세요.");
+		    			alert("에러가 발생하였습니다.");
+		    			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+		    		}
+				})// 아작스 끝
+    	}
+ }
+	    function clickbadcancel(){
+			var likeval = [[ ${goodresult} ]];
+			//alert(likeval);
+			//alert("추천하시겠습니까?");	
+			let boardId = [[ ${post.id} ]] ;
+			//alert(boardId + ": boardId");
+			//alert(typeof(boardId));
+			let userNo =[[ ${userInfo.userNo} ]] ;
+//			alert(userNo);
+			
+			let uri = /*[[ @{/cancelbad} ]]*/null;
+			if(likeval == false){
+				console.log(likeval + "좋아요 누름");
+					$.ajax({
+						type :'post',
+						url : uri,
+						contentType: 'application/json',
+						data :JSON.stringify(
+								{
+									"boardId" : boardId,
+									"userNo" : userNo
+								}		
+							),
+						success : function(data) {
+							alert('비추천을 취소하였습니다.');
+							location.reload();
+						},
+					error: function(xhr, status, error) {
+		    			alert("현재 비추천 취소를 진행할 수 없습니다. 잠시후 시도해주세요");
+		    		}
+				})// 아작스 끝
+			}
+	    }
+	 // 추천버튼을 눌렀을 때
+		function clickbad(){
+			var likeval = [[ ${goodresult} ]];
+//			alert(likeval);
+			//alert("추천하시겠습니까?");	
+			var boardId = [[ ${post.id} ]] ;
+			//alert(boardId + ": boardId");
+			//alert(typeof(boardId));
+			var userNo =  [[ ${userInfo.userNo} ]] ;
+			//alert(userNo);
+			
+			var uri = /*[[ @{/clickbad} ]]*/null;
+			//var params = {"boardId" : boardid, "userNo": userno}
+			var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+			//alert(JSON.stringify(params));
+			
+			if(likeval == false){
+				$.ajax({
+					type :'post',
+					url : uri,
+					contentType: 'application/json',
+					data :JSON.stringify(
+							{
+								"boardId" : boardId,
+								"userNo" : userNo
+							}		
+						),
+						success : function(data) {
+							alert('비추천을 하였습니다.');
+							location.reload();
+						},
+						error: function(xhr, status, error) {
+			    			alert("해당 게시물에는 비추천을 할 수 없습니다. 추천 취소를 누르고 다시 진행해주세요.");
+			    		}
+					})// 아작스 끝
+	    	}
+    
+	}
+ 
+    /*]]>*/
+	</script>
+</th:block>
+</html>

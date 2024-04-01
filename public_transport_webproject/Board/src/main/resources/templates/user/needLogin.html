@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+  <title>로그인필요</title>
+</th:block>
+<th:block layout:fragment="content">
+	
+	
+	
+	<div id="needLogin">
+		    <div>로그인이 필요한 서비스입니다.</div>
+	        <div>
+	                <button type="button" onclick="location.href='/user/signin.do'">로그인 하러가기</button>
+			</div>
+	</div>
+</th:block>
+</html>

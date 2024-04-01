@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/basic}">
+
+<th:block layout:fragment="title">
+  <title>마이 페이지 MyPage</title>
+
+</th:block>
+
+<!-- <header th:replace="layout/basic :: header"></header> -->
+
+<th:block layout:fragment="content">
+	<div class="page_tits">
+		<h3>마이페이지</h3>
+		<p class="path">
+			<strong>현재 위치 :</strong> <span>마이페이지</span> <span>내 정보 확인</span> 
+		</p>
+	</div>
+	<nav class="navbar navbar-expand-lg bg-light">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserMyPage.do">내정보확인</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/modify.do">내정보수정</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserListMyBoard.do">내 글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/mycommentlist.do">내 댓글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/changepwd.do">비밀번호 변경</a>
+				</li>
+			</ul>
+	</nav>
+	<div class="content">			
+	
+<!-- 	<section>
+			<dl class="outputUserInfo">
+				<dt class="key" id="userIdKey">아이디</dt>
+					<dd class="value" id="userIdValue">[[ ${userInfo.id} ]]</dd>
+					
+				<dt class="key" id="userNicknameKey">닉네임</dt>
+					<dd class="value" id="userNicknameValue">[[ ${userInfo.nickname} ]]</dd>
+					
+				<dt class="key" id="userPwdHintKey">비밀번호힌트</dt>
+					<dd class="value" id="userPwdHintValue">[[ ${userInfo.pwdHint} ]]</dd>
+					
+				<dt class="key" id="userPwdHintAnsKey">비밀번호 힌트의 답</dt>
+					<dd class="value" id="userPwdHintAnsValue">[[ ${userInfo.pwdHintAns} ]]</dd>
+					
+				<dt class="key" id="userEmailKey">이메일</dt>
+					<dd class="value" id="userEmailValue">[[ ${userInfo.email} ]]</dd>
+					
+				<dt class="key" id="userNameKey">이름</dt>
+					<dd class="value" id="userNameValue">[[ ${userInfo.userName} ]]</dd>
+					
+				<dt class="key" id="userAgeKey">생년월일</dt>
+					<dd class="value" id="userAgeValue">[[ ${userInfo.age} ]]</dd>
+					
+				<dt class="key" id="userGenderKey">성별</dt>
+					<dd th:if="${userInfo.gender==0}" class="value" id="userGenderValue">남자</dd>
+					<dd th:unless="${userInfo.gender==0}" class="value" id="userGenderValue">여자</dd>
+			</dl>
+	</section>  -->
+	
+
+<!-- li는 ul안에 들어가야 노란색 줄 안 뜬다.
+	노란색 줄 : Invalid location of tag
+	li : list item
+	cf) ol, dl
+	-->
+	
+	<div class=profile_wrap >
+		<ul>
+			<li>
+				<div class="key" id="userIdKey"><span id="userIdKeySpan" class="item_text">아이디 : [[${userInfo.id}]]</span></div>
+			</li>
+		 	<li>
+				<div class="key" id="userNicknameKey">
+					
+					<span id="userNickNameKeySpan">닉네임 : [[${userInfo.nickname}]]</span>
+					
+				</div>
+			</li>
+			<li>
+				<div class="key" id=userPwdHintKey>
+					
+					<span id="userPwdHintKeySpan">비밀번호힌트 : [[${userInfo.pwdHint}]]</span>
+					
+				</div>
+			</li>
+			<li>
+				<div class="key" id="userPwdHintAnsKey">
+					
+					<span id="userPwdHintKeySpan">비밀번호 힌트의 답 : [[${userInfo.pwdHintAns}]]</span>
+					
+				</div>
+			</li>
+			<li>
+				<div class="key" id="userEmailKey">
+					
+					<span id="userEmailKeySpan">이메일 : [[${userInfo.email}]]</span>
+					
+				</div>
+			</li>
+			<li>
+				<div class="key" id="userNameKey">
+				
+					<span id="userNameKeySpan">이름 : [[${userInfo.userName}]]</span>
+					
+				</div>
+			</li>
+			<li>
+				<div class="key" id="userAgeKey">
+					
+					<span id="userAgeKeySpan">생년월일 : [[${userInfo.age}]]</span>
+					
+				</div>
+			</li>
+		</ul>
+		<br>
+		
+		<button class="signout" type="button" onclick="removeCheck()">탈퇴하기</button>
+		
+		
+	</div>
+	
+		
+		
+	<!-- 	<button type="button" onclick="removeCheck()">탈퇴하기</button> -->
+	</div>
+ 		<!--<form id="SaveForm" method="post" autocomplete="off">
+				<div sec:authentication="userName"></div>
+				
+				이름
+				<div th:text="${userresponse.getName()}"></div>
+				
+				가입일
+				<div th:text="${userresponse.getSigninDate}"></div>
+				<div th:if="${user.response.getEmailCheck()!='true'}">
+					<input type="text" th:value="${userresponse.getEmail()}" disabled></input>
+						<input type="button class="sendEmail" value="인증번호 전송">
+							<input type="text" id="randnum" placeholder="인증번호를 입력해주세요>
+								<input type="button" id="confirmRandum" value="제출">
+				</div>
+				<div th:if="#{userresponse.getEmailCheck()=='true'}">
+					이메일 인증이 완료되었습니다.
+				</div>
+					<a href="/userMyPageModify"></a>
+				<script src="../static/mypagelib.js"></script>
+				
+			</form> -->
+	
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+    	/*<![CDATA[*/
+    	
+    	//삭제하기전 물어보기 함수
+	    function removeCheck(){
+	    	if(confirm("정말 탈퇴하시겠습니까??")==true){
+	    		deleteUser();	
+	    	}else{
+	    		return false;
+	    	}
+	    }
+    	
+    	// 회원탈퇴 함수
+	    function deleteUser() {
+	        const userNo = [[ ${userInfo.userNo} ]];
+	        const formHtml = `
+	            <form id="deleteForm" action="/user/secession.do" method="post">
+	               	 <input type="hidden" id="userNo" name="userNo" value="${userNo}" />
+	            </form>
+	        `;
+	        const doc = new DOMParser().parseFromString(formHtml, 'text/html');
+	        const form = doc.body.firstChild;
+	        document.body.append(form);
+	        document.getElementById('deleteForm').submit();
+	      }
+	  	
+    	/*]]>*/
+	</script>
+</th:block>
+
+
+</html>

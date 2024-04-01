@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.main.BridgeMapper">
+
+
+<select id="getResult" parameterType="com.study.domain.main.BridgeDTO" resultType="com.study.domain.main.BridgeDTO">
+	 SELECT
+        name
+        , start_position
+        , date
+        , time
+        , congestion_rate
+    FROM
+        analysis
+    WHERE
+       	name = #{name}
+   	AND 
+   		start_position LIKE CONCAT('%', #{name}, '%')
+	AND 
+		date = #{date}
+	AND
+		time = #{time}
+</select>
+
+
+
+
+
+</mapper>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+
+<th:block layout:fragment="title">
+  <title>내댓글보기</title>
+</th:block>
+
+
+<th:block layout:fragment="content">
+	<div class="page_tits">
+		<h3>마이페이지</h3>
+		<p class="path">
+			<strong>현재 위치 :</strong> <span>마이페이지</span> <span>내 정보 확인</span> 
+		</p>
+	</div>
+	<nav class="navbar navbar-expand-lg bg-light">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserMyPage.do">내정보확인</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/modify.do">내정보수정</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserListMyBoard.do">내 글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/mycommentlist.do">내 댓글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/changepwd.do">비밀번호 변경</a>
+				</li>
+			</ul>
+	</nav>
+	<div class="content">	
+		<table class="tb tb_col">
+	        <colgroup>
+	 		<col style="width:7.5%;" /><col style="width:auto;" /><col style="width:40%;" /><col style="width:10%;" />
+	        </colgroup>
+	        <thead>
+	          <tr>
+	            <th scope="col">글 타입</th>
+	            <th scope="col">글 제목</th>
+	            <th scope="col">댓글 내용</th>
+	            <th scope="col">등록일</th>
+	          </tr>
+	        </thead>
+	        <!--/* 리스트 데이터 렌더링 영역 */-->
+	        <tbody id="list">
+	        
+	        </tbody>
+	      </table>
+	
+	      <!--/* 페이지네이션 렌더링 영역 */-->
+	      <div class="paging">
+	        
+	      </div>
+	</div>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+    	/*<![CDATA[*/
+    	   window.onload = () => {
+
+
+      	findMyComment();
+    }
+    
+
+    // 게시글 리스트 조회
+    function findMyComment() {
+
+      const list = [[ ${response.list} ]];
+//      alert(list);
+      if ( !list.length ) {
+        document.getElementById('list').innerHTML = '<td colspan="6"><div className="no_data_msg">검색된 결과가 없습니다.</div></td>';
+        drawPage();
+      }
+
+      const pagination = [[ ${response.pagination} ]];
+      const params = [[ ${params} ]];
+      let num = pagination.totalRecordCount - ((params.page - 1) * params.recordSize);
+
+      drawList(list, num);
+      drawPage(pagination, params);
+    }
+
+
+    // 리스트 HTML draw
+    function drawList(list, num) {
+
+      let html = '';
+//	  alert(JSON.stringify(list));
+      list.forEach(row => {
+        html += `
+            <tr>
+                <td>${row.boardType === 0 ? '정보' : '자유'}</td>
+                <td class="tl"><a href="/post/view.do?id=${row.id}">${row.title}</a></td>
+                <td>${row.content}</td>
+                <td>${dayjs(row.createdDate).format('MM-DD HH:mm')}</td>
+
+            </tr>
+        `;
+      })
+
+      document.getElementById('list').innerHTML = html;
+    }
+
+
+    // 페이지 HTML draw
+    function drawPage(pagination, params) {
+
+      if ( !pagination || !params ) {
+        document.querySelector('.paging').innerHTML = '';
+        throw new Error('Missing required parameters...');
+      }
+
+      let html = '';
+
+      // 첫 페이지, 이전 페이지
+      if (pagination.existPrevPage) {
+        html += `
+            <a href="javascript:void(0);" onclick="movePage(1)" class="page_bt first">첫 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.startPage - 1})" class="page_bt prev">이전 페이지</a>
+        `;
+      }
+
+      // 페이지 번호
+      html += '<p>';
+      for (let i = pagination.startPage; i <= pagination.endPage; i++) {
+        html += (i !== params.page)
+                ? `<a href="javascript:void(0);" onclick="movePage(${i});">${i}</a>`
+                : `<span class="on">${i}</span>`
+      }
+      html += '</p>';
+
+      // 다음 페이지, 마지막 페이지
+      if (pagination.existNextPage) {
+        html += `
+            <a href="javascript:void(0);" onclick="movePage(${pagination.endPage + 1});" class="page_bt next">다음 페이지</a>
+            <a href="javascript:void(0);" onclick="movePage(${pagination.totalPageCount});" class="page_bt last">마지막 페이지</a>
+        `;
+      }
+
+      document.querySelector('.paging').innerHTML = html;
+    }
+
+
+    // 페이지 이동
+    function movePage(page) {
+
+        const form = document.getElementById('searchForm');
+        const queryParams = {
+            page: (page) ? page : 1,
+            recordSize: 10,
+            pageSize: 10,
+        }
+
+        location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
+    }
+    		
+    		
+    		
+    	/*]]>*/
+	</script>
+</th:block>
+
+</html>

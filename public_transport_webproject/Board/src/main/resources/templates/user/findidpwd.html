@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="utf-8">
+<title>Find ID Or Password</title>
+<script th:src="@{/js/function.js}"></script>
+<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script th:src="@{/js/moment.js}"></script>
+<script src="https://kit.fontawesome.com/79613ae794.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<style>
+.root {
+	display: flex;
+	width: 100%;
+	height: 100%;
+}
+
+.mobile-root {
+	flex-direction: column;
+}
+
+.mobile-root .inactive {
+	display: none;
+}
+
+.signin-wrapper {
+	flex-grow: 1;
+	background: #d5d5d5;
+	transition: all 0.32s ease-in;
+}
+
+.signup-wrapper {
+	flex-grow: 1;
+	background: #0F3758;
+	transition: all 0.32s ease-in-out;
+}
+
+.active {
+	flex-grow: 6;
+}
+
+.active.form {
+	z-index: 5;
+}
+
+.inactive {
+	pointer-events: none;
+	filter: blur(2px) grayscale(80%);
+	transform: scale(1.1);
+}
+
+.inactive .form-wrapper {
+	filter: opacity(55%);
+}
+
+html, body {
+	font-family: "Roboto";
+	height: 100vh;
+	padding: 0;
+	margin: 0;
+}
+
+h5 {
+	color: #212121;
+	font-size: 20px;
+	margin: 15px 0 30px 0;
+	text-align: center;
+}
+
+.form, .form-wrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.form-wrapper {
+	
+	background-color: white;
+	width: 300px;	/* 회원가입 로그인에서 흰색 바탕 크기 = 너비*/
+	height: 650px; /* 회원가입 로그인에서 흰색 바탕 크기 = 높이*/
+	padding: 20px 0;
+	margin: 10px auto;
+	border-radius: 15px;
+}
+
+.form-wrapper button {
+	cursor: pointer;
+	font-weight: bold;
+	width: 230px;
+	margin: 0 35px 20px;
+	height: 45px;
+	padding: 6px 15px;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+}
+
+.form-wrapper button.primary {
+	color: white;
+	background: #0F3758;
+}
+
+.form-wrapper button.primary:hover {
+	opacity: 0.9;
+}
+
+.form-wrapper button.secondary {
+	background: white;
+	color: #0F3758;
+}
+
+.form-wrapper button.secondary:hover {
+	background: #f5f5f5;
+}
+
+.form-wrapper .form-field {
+	font-weight: bold;
+	/* width: 200px; */
+	margin: 0 35px 20px;
+	height: 35px;
+	padding: 6px 15px;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	background: #f5f5f5;
+	color: #748194;
+	font-size: 13px;
+}
+/* 이거랑 이거 밑에는 무슨 기능인지 모르겠네.. 이래저래 바꿔봐도 보이는게 없어. */
+.form-wrapper p {
+	color: #424242;
+	font-size: 14px;
+	text-align: center;
+}
+
+.form-wrapper p a {
+	cursor: pointer;
+	color: #0F3758;
+}
+
+.form-wrapper p a:hover {
+	color: #009688;
+}
+
+#alert-success {
+	color:black;
+	background: #CCFFCC;
+}
+
+#alert-danger {
+	color:black;
+	background: #F9D7DA;
+}
+
+.findIdPwd {
+	color : #F26F51;
+	background: #ffffff;	
+}
+#loginLogo{
+	text-align: center;
+}
+
+</style>
+</head>
+<body>
+<div class="root">
+ 	<div class="signin-wrapper form active">
+ 		<form method="post" name="findId">
+			<div class="form-wrapper">
+				<div id="loginLogo">
+					<a href="/"><img src="https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%EB%A1%9C%EA%B3%A0.png"></a>
+				</div>
+				<h5>아이디 찾기</h5>
+				<input type="text" id="inputName" placeholder="이름" class="form-field" required></input>
+				<input type="email" id="inputEmail" placeholder="이메일" class="form-field" required></input>
+				<input type="date" id="inputAge" class=form-field required></input>
+
+				<button type="button" class="button primary" onclick="actionFindId()">아이디 찾기</button>
+				<button type="button" class="button secondary" id="click-signup" 
+				onclick="location.href='signup.do'">회원가입하러 가기</button>
+				
+				<button type="button" class ="findIdPwd" onclick="location.href='findpwd.do'"> 비밀번호 찾기</button>
+				
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+</body>
+<script th:inline="javascript">
+	 /*<![CDATA[*/
+	function actionFindId(){
+		var userName=document.getElementById("inputName").value;
+		var email=document.getElementById("inputEmail").value;
+		var age=document.getElementById("inputAge").value;
+//		alert(JSON.stringify(id));
+
+//	    alert("uri가져오기전");
+	    var uri = /*[[ @{/findid} ]]*/null;
+	    var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+	    var params = {"userName": userName,"email":email, "age": age};
+	    	
+//	   	alert(JSON.stringify(params));
+	    	
+	    	
+//	    	alert("아작스전");
+	    	$.ajax({
+	    		url: uri,
+	    		type: "POST",
+	    		headers: headers,
+	    		dataType: "json",
+	    		data: JSON.stringify(params),
+				
+	    		success: function(response) {
+					var id=JSON.stringify(response.id);
+					alert(userName+"님의 아이디는 "+id+"입니다");
+	    		},
+	    		error: function(xhr, status, error) {
+	    			alert("해당하는 사용자가 없습니다. 다시 입력부탁드립니다.");
+	    			userName.focus();
+	    		}
+	    	});
+		
+		
+	 }
+
+	/*]]>*/
+</script>
+</html>

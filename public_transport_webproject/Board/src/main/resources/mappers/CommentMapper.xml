@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.study.domain.comment.CommentMapper">
+
+	<sql id="commentColumns">
+		  id
+		, board_id
+		, board_type
+		, content
+		, cdepth
+		, group_no
+		, corder
+		, writer_no
+		, created_date
+		, modified_date
+		, del_yn
+		, del_date
+		, secret
+	</sql>
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertComment" parameterType="com.study.domain.comment.CommentDTO">
+		INSERT INTO comment (
+			<include refid="commentColumns" />
+		) VALUES (
+			  #{id}
+			, #{boardId}
+			, #{boardType}
+			, #{content}
+			, 0
+			, 0
+			, 0
+			, #{writerNo}
+			, NOW()
+			, NULL
+			, 0
+			, NULL
+			, 0
+		)
+	</insert>
+
+	<!-- 댓글 수정 및 삭제를 위한 댓글 조회 -->
+	<select id="selectCommentDetail" parameterType="int" resultType="com.study.domain.comment.CommentDTO">
+		SELECT
+			a.id
+		, a.board_id
+		, a.board_type
+		, a.content
+		, a.cdepth
+		, a.group_no
+		, a.corder
+		, a.writer_no
+		, a.created_date
+		, a.modified_date
+		, a.del_yn
+		, a.del_date
+		, a.secret
+		, b.nickname
+		FROM
+			comment as a
+		JOIN
+			user as b
+		ON
+			a.writer_no = b.user_no
+		WHERE
+			a.del_yn = 0
+		AND
+			a.id = #{id}
+	</select>
+	
+	<!--  댓글 수정 -->
+	<update id="updateComment" parameterType="com.study.domain.comment.CommentDTO">
+		UPDATE comment
+		SET
+			  modified_date = NOW()
+			, content = #{content}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!--  댓글 삭제 -->
+	<update id="deleteComment" parameterType="int">
+		UPDATE comment
+		SET
+			  del_yn = 1
+			, del_date = NOW()
+		WHERE
+			id = #{id}
+	</update>
+	<!--  댓글 리스트 출력 -->
+	<select id="selectCommentList" parameterType="com.study.domain.comment.CommentDTO" resultType="com.study.domain.comment.CommentDTO">
+		SELECT
+		a.id
+		, a.board_id
+		, a.board_type
+		, a.content
+		, a.cdepth
+		, a.group_no
+		, a.corder
+		, a.writer_no
+		, a.created_date
+		, a.modified_date
+		, a.del_yn
+		, a.del_date
+		, a.secret
+		, a.count_good
+	    , a.count_bad
+		, b.nickname
+		FROM
+			comment as a
+		JOIN
+			user as b
+		ON
+			a.writer_no = b.user_no
+		WHERE
+			a.del_yn = 0
+		AND
+			a.board_id = #{boardId}
+		ORDER BY
+			a.id DESC,
+			a.created_date DESC
+	</select>
+
+	<select id="commentCount" parameterType="com.study.domain.comment.CommentDTO" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			comment
+		WHERE
+			del_yn = 0
+		AND
+			board_id = #{boardId}
+	</select>
+	
+	<!-- 내댓글리스트 출력 -->
+	<select id="UserCommentList" parameterType="com.study.common.dto.SearchDto" resultType="com.study.domain.comment.UserCommentListDTO">
+		SELECT
+		a.id as commentId
+		, a.board_id
+		, a.board_type
+		, a.content
+		, a.cdepth
+		, a.group_no
+		, a.corder
+		, a.writer_no
+		, a.created_date
+		, a.modified_date
+		, a.del_yn
+		, a.del_date
+		, a.secret
+		, a.count_good
+	    , a.count_bad
+		, b.nickname
+		, c.title
+		, c.id
+		FROM
+			comment as a
+		JOIN
+			user as b
+		ON
+			a.writer_no = b.user_no
+		Join
+			board as c
+		ON 
+			a.board_id = c.id
+		WHERE
+			a.del_yn = 0
+		AND
+			b.user_no = #{userNo}
+		ORDER BY
+			a.id DESC,
+			a.created_date DESC
+		LIMIT #{pagination.limitStart}, #{recordSize}
+	</select>
+	
+	<!-- 내댓글리스트 갯수 -->		
+	<select id="UserCommentListCount" parameterType="com.study.common.dto.SearchDto" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			comment as a
+		JOIN 
+			user as b
+		ON
+			a.writer_no=b.user_no	
+		WHERE
+			a.del_yn = 0
+		AND
+			b.user_no = #{userNo}
+	</select>
+
+</mapper>

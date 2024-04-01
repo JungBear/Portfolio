@@ -1,0 +1,229 @@
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+   `user_no`   INT   NOT null   COMMENT 'Auto Increment',
+   `id`   VARCHAR(20)   NOT NULL   COMMENT '영어+숫자, 5자리 이상 20자리 이하(unique)',
+   `name`   VARCHAR(6)   NOT NULL,
+   `nickname`   VARCHAR(6)   NOT NULL   COMMENT '한글로만 2자리이상 6자리 미만, 운영 및 관리 글자가 포함되지 못하게(unique)',
+   `email`   TEXT   NOT NULL   COMMENT 'OOO@도메인',
+   `pwd`   VARCHAR(300)   NOT NULL   COMMENT '8자리이상 20자리 이하( 추후 암호화 예정)',
+   `pwd_hint`   VARCHAR(30)   NOT NULL,
+   `pwd_hint_ans`   TEXT   NOT NULL,
+   `gender`   INT   NOT NULL   COMMENT '0과 1로 구성, 0이면 남자, 1이면 여자',
+   `age`   DATE   NOT NULL   COMMENT 'YYYYMMDD',
+   `signin_date`   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYYYMMDDhhmmss',
+   `experience`   INT   NOT NULL   DEFAULT 0,
+   `del_yn`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0과 1로 구성, 0이면 존재, 1이면 삭제',
+   `del_date`   DATETIME   NULL   COMMENT 'YYYYMMDDhhmmss',
+   `modified_date`   DATETIME   NULL   COMMENT 'YYYYMMDDhhmmss',
+   `Administrator`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0이면 일반유저,  1이면 관리자',
+   `attendance_date`   INT   NOT NULL   DEFAULT 0,
+   `now_login_time`   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYYYMMDDhhmmss',
+   `recent_login_time`   DATETIME   NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYYYMMDDhhmmss',
+   `recent_logout_time`   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYYYMMDDhhmmss'
+);
+
+DROP TABLE IF EXISTS `board`;
+
+CREATE TABLE `board` (
+   `id`   INT   NOT null   COMMENT 'Auto Increment',
+   `type`   tinyint   NOT NULL   COMMENT '0이면 정보글, 1이면 자유글',
+   `title`   TEXT   NOT NULL,
+   `content`   TEXT   NOT NULL,
+   `writer_no`   int   NOT NULL,
+   `created_date`   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYYYMMDDhhmmss',
+   `modified_date`   DATETIME   NULL   COMMENT 'YYYYMMDDhhmmss',
+   `del_yn`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0과 1로 구성, 0이면 존재, 1이면 삭제',
+   `del_date`   DATETIME   NULL   COMMENT 'YYYYMMDDhhmmss',
+   `notice`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0이면 기본글, 1이면 공지',
+	`count_good`	INT	NOT NULL	DEFAULT 0,
+	`count_bad`	INT	NOT NULL	DEFAULT 0
+);
+
+
+DROP TABLE IF EXISTS `comment`;
+
+CREATE TABLE `comment` (
+   `id`   INT   NOT NULL    COMMENT 'Auto Increment',
+   `board_id`   INT   NOT NULL,
+   `board_type`   TINYINT   NOT NULL   COMMENT '0이면 정보글, 1이면 자유글',
+   `content`   TEXT   NOT NULL,
+   `cdepth`   INT   NOT NULL   DEFAULT 0   COMMENT '댓글 0, 대댓글 1, 대대댓글2',
+   `group_no`   INT   NOT NULL   DEFAULT 0   COMMENT '부모댓글의 계층값이 들어감.',
+   `corder`   INT   NOT NULL   COMMENT '작성순서를 의미함(단, 부모의 댓글의 순위에 따라)',
+   `writer_no`   INT   NOT NULL,
+   `created_date`   DATETIME   NOT NULL   DEFAULT CURRENT_TIMESTAMP   COMMENT 'YYMMDDhhmmss',
+   `modified_date`   DATETIME   NULL   COMMENT 'YYYYMMDDhhmmss',
+   `del_yn`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0과 1로 구성, 0이면 존재, 1이면 삭제',
+   `del_date`   DATETIME   NULL   COMMENT 'YYYYMMDDyymmss',
+   `secret`   TINYINT   NOT NULL   DEFAULT 0   COMMENT '0일때 공개, 1일때 비밀',
+   `count_good`	INT	NOT NULL	DEFAULT 0,
+   `count_bad`	INT	NOT NULL	DEFAULT 0
+);
+
+DROP TABLE IF EXISTS `report`;
+
+CREATE TABLE `report` (
+   `id`   INT   NOT null    COMMENT 'Auto Increment',
+   `board_type`   TINYINT   NULL   COMMENT '0이면 정보글, 1이면 자유글',
+   `board_id`   INT   NULL,
+   `conment_id`   INT   NULL,
+   `reporter_no`   INT   NOT NULL,
+   `category`   VARCHAR(10)   NOT NULL,
+   `report_date`   DATETIME   NOT NULL   COMMENT 'YYYYMMDDhhmmss'
+);
+
+DROP TABLE IF EXISTS `good`;
+
+CREATE TABLE `good` (
+	`id`	INT	NOT null COMMENT 'Auto Increment',
+	`board_type`	TINYINT	NULL	COMMENT '0이면 정보글, 1이면 자유글',
+	`board_id`	INT	NULL,
+	`comment_id`	INT	NULL,
+	`user_no`	INT	NULL,
+	`goodbad`	TINYINT	NOT NULL	DEFAULT 0	COMMENT '추천이면 1, 비추면0',
+	`good_date`	DATETIME	NOT NULL	DEFAULT CURRENT_TIMESTAMP
+);
+
+ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+   `user_no`
+);
+ALTER TABLE user modify COLUMN user_no INT AUTO_INCREMENT NOT NULL ;
+
+ALTER TABLE `board` ADD CONSTRAINT `PK_BOARD` PRIMARY KEY (
+   `id`,
+   `type`
+);
+ALTER TABLE board MODIFY COLUMN id int auto_increment NOT NULL COMMENT 'Auto Increment';
+
+ALTER TABLE `comment` ADD CONSTRAINT `PK_COMMENT` PRIMARY KEY (
+   `id`
+);
+ALTER TABLE comment MODIFY COLUMN id int auto_increment NOT NULL COMMENT 'Auto Increment';
+ALTER TABLE `report` ADD CONSTRAINT `PK_REPORT` PRIMARY KEY (
+   `id`
+);
+ALTER TABLE report MODIFY COLUMN id int auto_increment NOT NULL COMMENT 'Auto Increment';
+
+ALTER TABLE `good` ADD CONSTRAINT `PK_GOOD` PRIMARY KEY (
+   `id`
+);
+ALTER TABLE good MODIFY COLUMN id int auto_increment NOT NULL COMMENT 'Auto Increment';
+
+alter table board.`user`  add unique (id);
+alter table board.`user` add unique (nickname);
+
+ALTER TABLE `comment` ADD CONSTRAINT `FK_board_TO_comment_1` FOREIGN KEY (
+   `board_id`, `board_type`
+)
+REFERENCES `board` (
+   `id`, `type`
+);
+
+ALTER TABLE `board` ADD CONSTRAINT `FK_user_TO_board_1` FOREIGN KEY (
+   `writer_no`
+)
+REFERENCES `user` (
+   `user_no`
+);
+
+ALTER TABLE `comment` ADD CONSTRAINT `FK_user_TO_comment_1` FOREIGN KEY (
+   `writer_no`
+)
+REFERENCES `user` (
+   `user_no`
+);
+
+ALTER TABLE `report` ADD CONSTRAINT `FK_board_TO_report_1` FOREIGN KEY (
+   `board_id`, `board_type`
+)
+REFERENCES `board` (
+   `id`, `type`
+);
+
+ALTER TABLE `report` ADD CONSTRAINT `FK_comment_TO_report_1` FOREIGN KEY (
+   `conment_id`
+)
+REFERENCES `comment` (
+   `id`
+);
+
+ALTER TABLE `report` ADD CONSTRAINT `FK_user_TO_report_1` FOREIGN KEY (
+   `reporter_no`
+)
+REFERENCES `user` (
+   `user_no`
+);
+
+ALTER TABLE `good` ADD CONSTRAINT `FK_board_TO_good_1` FOREIGN KEY (
+    `board_id`,`board_type`
+)
+REFERENCES `board` (
+    `id`,`type`
+);
+
+
+ALTER TABLE `good` ADD CONSTRAINT `FK_comment_TO_good_1` FOREIGN KEY (
+   `comment_id`
+)
+REFERENCES `comment` (
+   `id`
+);
+
+ALTER TABLE `good` ADD CONSTRAINT `FK_user_TO_good_1` FOREIGN KEY (
+   `user_no`
+)
+REFERENCES `user` (
+   `user_no`
+);
+
+
+select * from user;
+
+select * from board;
+
+select * from comment;
+
+select * from good;
+
+ALTER TABLE voard AUTO_INCREMENT = 1;
+
+DELETE FROM board;
+
+alter table comment change reparent depth int;
+alter table `user`  change name user_name varchar(6);
+
+DROP TABLE IF EXISTS `analysis`;
+
+CREATE TABLE `analysis` (
+	`name`	VARCHAR(80)	NOT NULL	COMMENT '00대교',
+	`start_position`	VARCHAR(10)	NOT NULL	COMMENT '00대교북(남)단',
+	`date`	DATE	NOT NULL	COMMENT 'YYYYMMDD',
+	`time`	TIME	NOT NULL	COMMENT 'HH:00:00',
+	`congestion_rate`	INT	NOT NULL	COMMENT '모델에서 넘어온 결과값'
+);
+
+ALTER TABLE `analysis` ADD CONSTRAINT `PK_ANALYSIS` PRIMARY KEY (
+	`name`,
+	`start_position`,
+	`date`,
+	`time`
+);
+
+select * from analysis;
+
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("성산대교","성산대교북단",'2022-11-16','12:00', 20); 
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("성산대교","성산대교남단",'2022-11-16','12:00', 40); 
+
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("청담대교","청담대교북단",'2022-11-16','12:00', 99); 
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("청담대교","청담대교남단",'2022-11-16','12:00', 50); 
+
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("한남대교","한남대교북단",'2022-11-16','12:00', 70); 
+insert into analysis(name,start_position, `date`, `time`,congestion_rate) 
+values("한남대교","한남대교남단",'2022-11-16','12:00', 10); 
+

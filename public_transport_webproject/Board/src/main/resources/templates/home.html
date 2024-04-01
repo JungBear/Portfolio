@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+<th:block layout:fragment="title">
+  <title>메인 페이지</title>
+</th:block>
+<th:block layout:fragment="content">
+	<div class="page_tits">
+    	<h3>혼잡도분석</h3>
+  	</div>
+	<div id="selectForm">
+		<form id="selectInput">
+			<div>
+				<ul class="class1">
+					<li class="inputSelect">
+						<label for="bridge" id="mainLabel" class="mainLabel">다리명 : </label>
+						<select name="bridge" id="bridgeName" class="bridge">
+							<option value="성산대교">성산대교</option>
+							<option value="청담대교">청담대교</option>
+							<option value="한남대교">한남대교</option>
+						</select>
+					</li>
+					<li class="inputSelect">
+						<label for="selectDate" id="selectDateLabel" class="mainLabel">날짜명 : </label>
+						<input type="date" name="selectDate" id="selectDate">
+					</li>
+					<li class="inputSelect" >
+						<label for="selHour" class="mainLabel">시간 : </label>
+						<select name="selHour" id="selHour"></select>
+					</li>
+					 <!-- <li class="inputSelect"><input type="submit" id=selSubmit value="검색"></li> -->
+					<li class="inputSelect">
+						<button onclick="submitInputSelect()" type = "button" class="btn btn-dark">검색</button>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+	<div class="drawMap">
+		<div id="map" style="width:100%;height:600px;"></div>
+		<img id="insetImgLeft">
+		<img id="insetImgRight">
+	</div>
+	<br>
+	<br>
+	<div>
+		<h3 class = "hList" id="h3InfoList"><a href="post/infolist.do">정보게시판</a></h3>
+		<h3 class = "hList" id="h3FreeList"><a href="post/freelist.do">자유게시판</a></h3>
+	</div>
+	<br>
+	<div>     <!--/* 리스트 */-->
+      	<div class=mainLeftInfoList>
+	      	<table class="tb tb_col">
+		    	<colgroup>
+		 			<col style="width:330px;" /><col style="width:100px;" /><col style="width:150px;" />
+		        </colgroup>
+		        <thead>
+		          	<tr>
+		            	<th scope="col">제목</th>
+		            	<th scope="col">작성자</th>
+		            	<th scope="col">등록일</th>
+		          	</tr>
+		        </thead>
+		        <!--/* 리스트 데이터 렌더링 영역 */-->
+		        <tbody id="infoList">
+		        
+		        </tbody>
+		      </table>
+		</div>
+		<div class=mainRightInfoList>
+	      	<table class="tb tb_col">
+		    	<colgroup>
+		 			<col style="width:331px;" /><col style="width:100px;" /><col style="width:150px;" />
+		        </colgroup>
+		        <thead>
+		          	<tr>
+		            	<th scope="col">제목</th>
+		            	<th scope="col">작성자</th>
+		            	<th scope="col">등록일</th>
+		          	</tr>
+		        </thead>
+		        <!--/* 리스트 데이터 렌더링 영역 */-->
+		        <tbody id="freeList">
+		        
+		        </tbody>
+		      </table>
+		</div>
+    </div>
+	</th:block>
+
+<th:block layout:fragment="script">
+<!-- localhost 키  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f8da8382da627ef7cfcaa96e79115e49"></script>-->
+<!-- 배포용 키 --><script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=62dede37c1073971f38950f9cb5a8328"></script>
+
+
+<script th:inline="javascript">
+
+/*<![CDATA[*/
+ 	window.onload = () => {
+		drawMap("성산대교");
+		drawInfoList();
+		drawFreeList();
+    }
+	
+	
+	function drawMap(response){
+		// response[0] : 남단 -> 북단
+		// response[1] : 북단 -> 남단
+		if(response == null || response == ''){
+			alert("해당날짜의 데이터가 없습니다 다른날짜를 선택해 주세요.");
+			return false;
+		}
+		let bridgeName = response[0].name;
+//		console.log(bridgeName);
+		switch (bridgeName){
+			case "성산대교":
+				var latitude = 37.552167;
+				var longitude = 126.891178;
+				break;
+			case "청담대교":
+				var latitude = 37.526490;
+				var longitude = 127.064388;
+				break;
+			case "한남대교":
+				var latitude = 37.527201;
+				var longitude = 127.012782;
+				break;
+			default:
+				var latitude = 37.552167;
+				var longitude = 126.891178;
+				break;
+		}
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 메이플 브금
+		mapOption = { 
+		    center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
+		    draggable: false, // 지도를 생성할때 지도 이동 및 확대/축소를 막으려면 draggable: false 옵션을 추가하세요
+		    disableDoubleClickZoom: true,
+		    level: 4  // 지도의 확대 레벨
+		};
+		
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		// 지도에 표시할 선을 생성합니다
+		
+		let startPosition1 = response[0].startPosition;  //남단시작
+		let startLatitude1 = 0;
+		let startLongitude1 = 0;
+		let endLatitude1 = 0;
+		let endLongitude1 = 0
+		switch (startPosition1){
+			case "성산대교남단":
+				startLatitude1 = 37.547892;    //남단 
+				startLongitude1 = 126.888868;  //남단
+				endLatitude1 = 37.556244;      //북단
+				endLongitude1 = 126.893926;    //북단
+				break;
+			case "청담대교남단":
+				startLatitude1 = 37.523133;    //남단 
+				startLongitude1 = 127.063126;  //남단
+				endLatitude1 = 37.529678;      //북단
+				endLongitude1 = 127.066068;    //북단
+				break;
+			case "한남대교남단":
+				startLatitude1 = 37.525178;    //남단 
+				startLongitude1 = 127.014995;  //남단
+				endLatitude1 = 37.529858;      //북단
+				endLongitude1 = 127.010649;    //북단
+				break;
+		}				
+		
+		
+		let congestionRate1 = response[0].congestionRate; //남단->북단의 혼잡도
+		let color1 = '';   // 남단-> 북단 혼잡도에 따른 색
+		if(congestionRate1==1){
+			color1 = '#39D729';     //원활
+		}else if(congestionRate1==2){
+			color1 = '#FFC829';     // 서행
+		}else if(congestionRate1==3){
+			color1 = '#FF3829'      // 정체
+		}
+		
+		var linePath1 = [
+		// 남단 -> 북단 선
+		    new kakao.maps.LatLng(startLatitude1, startLongitude1),  //startLatitude1, startLongitude1
+		    new kakao.maps.LatLng(endLatitude1, endLongitude1)   //endLatitude1 , endLongitude1
+		];
+		var polyline1 = new kakao.maps.Polyline({
+		    path: linePath1, // 선을 구성하는 좌표배열 입니다
+		    strokeWeight:  13, // 선의 두께 입니다
+		    strokeColor: color1, // 선의 색깔입니다
+		    strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+		    strokeStyle: 'solid' // 선의 스타일입니다
+		});
+		polyline1.setMap(map);  
+		
+		let startPosition2 = response[1].startPosition;   //북단시작
+		let congestionRate2 = response[1].congestionRate; //북단->남단의 혼잡도
+		
+		let startLatitude2 = 0;
+		let startLongitude2 = 0;
+		let endLatitude2 = 0;
+		let endLongitude2 = 0
+		switch (startPosition2){
+		case "성산대교북단":
+			startLatitude2 = 37.556512;    //북단 
+			startLongitude2 = 126.893540;  //북단
+			endLatitude2 = 37.548110;      //남단
+			endLongitude2 = 126.888431;    //남단
+			break;
+		case "청담대교북단":
+			startLatitude2 = 37.529906;    //북단 
+			startLongitude2 = 127.065718;  //북단
+			endLatitude2 = 37.523292;      //남단
+			endLongitude2 = 127.062701;    //남단
+			break;
+		case "한남대교북단":
+			startLatitude2 = 37.529688;    //북단 
+			startLongitude2 = 127.010231;  //북단
+			endLatitude2 = 37.525029;      //남단
+			endLongitude2 = 127.014693;    //남단
+			break;
+	}		
+		
+		let color2 = '';   // 북단-> 남단 혼잡도에 따른 색
+		if(congestionRate2==1){
+			color2 = '#39D729';     //원활
+		}else if(congestionRate2==2){
+			color2 = '#FFC829';     // 서행
+		}else if(congestionRate2==3){
+			color2 = '#FF3829'      // 정체
+		}
+		
+		
+		var linePath2 = [
+		// 북단 -> 남단 선
+		    new kakao.maps.LatLng(startLatitude2, startLongitude2),
+		    new kakao.maps.LatLng(endLatitude2, endLongitude2) 
+		];
+		var polyline2 = new kakao.maps.Polyline({
+		    path: linePath2, // 선을 구성하는 좌표배열 입니다
+		    strokeWeight: 13, // 선의 두께 입니다
+		    strokeColor: color2, // 선의 색깔입니다
+		    strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+		    strokeStyle: 'solid' // 선의 스타일입니다
+		});
+		polyline2.setMap(map);
+		insertImg(response);
+	}
+
+	document.getElementById('selectDate').value = new Date().toISOString().substring(0, 10);	//현재 날짜로 지정 
+	//document.getElementById('selectDate').value = new Date("2022-11-16").toISOString().substring(0, 10);	//임시로 데이터 있는곳
+	
+	// 시간 select박스 동적으로 삽입
+	var $select = jQuery("#selHour");
+	let today = new Date();
+	let hours = today.getHours();
+	console.log(hours);
+	for (var hr = 0; hr < 24; hr++) {
+	  	var hrStr = hr.toString().padStart(2, "0");
+		var val = hrStr + ":00";
+		
+		
+		if(hours==hrStr){
+			$select.append('<option val="' + val + '" selected>' + val + '</option>');
+		}else{
+			$select.append('<option val="' + val + '">' + val + '</option>');
+		}
+		
+	}
+	
+	var mmt = moment();
+	var nowTime = mmt.format("HH");
+	console.log(nowTime);
+
+
+	//검색버튼 눌렀을때 실행
+	function submitInputSelect() {
+		
+//    	alert("insertComment 실행됨");
+    	var name = document.getElementById("bridgeName").value;
+//		alert(typeof bridge);
+//    	alert(bridge);
+    	var selDate = document.getElementById("selectDate").value;
+//    	alert(date);
+	   	var selHour = document.getElementById("selHour").value;
+//	   	alert(typeof time);
+//   		var time = '12:00:00';	//임시로 데이터 있는 곳
+    	
+//    	alert(time);
+// 		alert("uri가져오기전");
+//		alert(typeof date);
+//		alert(typeof time);
+    	var uri = /*[[ @{/congestionrate} ]]*/null;
+    	var headers = {"Content-Type": "application/json"};
+    	var params = {"name": name, "selDate": selDate, "selHour": selHour};
+//	  	alert(JSON.stringify(params));  	
+//    	alert("아작스전");
+    	$.ajax({
+    		url: uri,
+    		type: "GET",
+    		headers: headers,
+ 	 		dataType: "json",
+    		data: params,
+    		success: function(response) {		
+//   			alert(congestionRate);
+//    			alert(JSON.stringify(response));
+   				drawMap(response);
+    			}
+    		,
+    		error: function(xhr, status, error) {
+//    			alert("에러가 발생하였습니다.");
+//    			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+    			alert("해당날짜의 데이터가 없습니다 다른날짜를 선택해 주세요.");
+    		}
+    	});
+    };
+
+    
+    // 리스트 HTML draw
+    function drawInfoList() {
+		const infoList = [[ ${infoPosts} ]];
+//		alert(list);
+      	let html = '';
+      	infoList.forEach(row => {
+	        html += `
+	            <tr>
+	                <td class="tl"><a href="/post/view.do?id=${row.id}">${row.title}</a></td>
+	                <td>${row.nickname}</td>
+	                <td>${dayjs(row.createdDate).format('MM-DD HH:mm')}</td>
+	
+	            </tr>
+	        `;
+      })
+
+      document.getElementById('infoList').innerHTML = html;
+    }
+    
+    // 리스트 HTML draw
+    function drawFreeList() {
+		const freeList = [[ ${freePosts} ]];
+//		alert(list);
+      	let html = '';
+      	freeList.forEach(row => {
+	        html += `
+	            <tr>
+	                <td class="tl"><a href="/post/view.do?id=${row.id}">${row.title}</a></td>
+	                <td>${row.nickname}</td>
+	                <td>${dayjs(row.createdDate).format('MM-DD HH:mm')}</td>
+	
+	            </tr>
+	        `;
+      })
+
+      document.getElementById('freeList').innerHTML = html;
+    }
+	
+    function insertImg(response){
+    	switch(response[0].name){
+    	case "성산대교":
+    		//북단
+    		$("#insetImgLeft").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%EC%84%B1%EC%82%B0%EB%8C%80%EA%B5%90%20%EB%B6%81%EB%B6%80.png");
+    		
+    		//남단
+        	$("#insetImgRight").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%EC%84%B1%EC%82%B0%EB%8C%80%EA%B5%90%20%EB%B6%81%EB%B6%80.png");
+        	break;
+    	case "청담대교":
+    		$("#insetImgLeft").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%EC%B2%AD%EB%8B%B4%EB%8C%80%EA%B5%90%EB%B6%81%EB%8B%A8.png");
+        	$("#insetImgRight").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%EC%B2%AD%EB%8B%B4%EB%8C%80%EA%B5%90%EB%82%A8%EB%8B%A8.png");
+        	break;
+    	case "한남대교":
+    		$("#insetImgLeft").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%ED%95%9C%EB%82%A8%EB%8C%80%EA%B5%90%EB%B6%81%EB%8B%A8.png");
+        	$("#insetImgRight").attr("src", "https://raw.githubusercontent.com/JungBear/public_transport_webproject/main/Board/src/main/resources/static/images/%ED%95%9C%EB%82%A8%EB%8C%80%EA%B5%90%EB%82%A8%EB%8B%A8.png");
+        	break;
+        default:
+        	
+        	break;
+    	}
+    	
+    	
+    }
+	 
+	    /*]]>*/
+</script>
+
+</th:block>
+</html>

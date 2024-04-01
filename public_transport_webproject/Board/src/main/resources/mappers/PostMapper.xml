@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.post.PostMapper">
+
+    <!-- tb_post 테이블 전체 컬럼 -->
+    <sql id="postColumns">
+          id 
+        , type
+        , title
+        , content
+        , writer_no
+        , created_date
+        , modified_date      
+        , del_yn
+        , del_date
+        , notice
+    </sql>
+    
+      <!-- 게시글 검색 -->
+    <sql id="search">
+        <!-- 검색 키워드가 있을 때 -->
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'title'.equals( searchType )">
+                            AND title LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'content'.equals( searchType )">
+                            AND content LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'writer'.equals( searchType )">
+                            AND writer_no LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </when>
+                <!-- 전체 검색일 때 때 -->
+                <otherwise>
+                    AND (
+                           title LIKE CONCAT('%', #{keyword}, '%')
+                        OR content LIKE CONCAT('%', #{keyword}, '%')
+                        OR b.nickname LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
+
+
+    <!-- 게시글 저장 -->
+    <insert id="save" parameterType="com.study.domain.post.PostRequest" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO board (
+            <include refid="postColumns" />
+        ) VALUES (
+              #{id}
+            , #{type}
+            , #{title}
+            , #{content}
+            , #{writerNo}
+            , NOW()
+            , NULL
+            , 0
+            , NULL
+            , 0
+        )
+    </insert>
+	
+	 <!-- 모든 게시글 상세정보 조회 -->
+    <select id="findById" parameterType="long" resultType="com.study.domain.post.PostResponse">
+        SELECT
+            a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.id = #{value}
+    </select>
+
+    <!-- 게시글 수정 -->
+    <update id="update" parameterType="com.study.domain.post.PostRequest">
+        UPDATE board
+        SET
+              modified_date = NOW()
+            , title = #{title}
+            , content = #{content}
+            , notice = #{notice}
+        WHERE
+            id = #{id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deleteById" parameterType="long">
+        UPDATE board
+        SET
+            del_yn = 1
+          , del_date = NOW()
+        WHERE
+            id = #{id}
+    </delete>
+
+<!--      게시글 리스트 조회 
+    <select id="findAll" parameterType="com.study.common.dto.SearchDto" resultType="com.study.domain.post.PostResponse">
+        SELECT
+            <include refid="postColumns" />
+        FROM
+            board
+        WHERE
+            del_yn = 0 
+            <include refid="search" />
+        ORDER BY
+            id DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>  -->
+
+    <!-- 정보게시글 리스트 조회 -->
+    <select id="findInfo" parameterType="com.study.common.dto.SearchDto" resultType="com.study.domain.post.PostResponse">
+        SELECT
+			  a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+            , b.user_no
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.del_yn = 0 AND a.type = 0 
+            <include refid="search" />
+        ORDER BY
+            id DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+    
+    <!-- 자유게시글 리스트 조회 -->
+    <select id="findFree" parameterType="com.study.common.dto.SearchDto" resultType="com.study.domain.post.PostResponse">
+        SELECT
+			  a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.del_yn = 0 AND a.type = 1 
+            <include refid="search" />
+        ORDER BY
+            id DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+
+    <!-- 게시글 수 카운팅 -->
+   <!--  <select id="count" parameterType="com.study.common.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            board
+        WHERE
+            del_yn = 0 
+            <include refid="search" />
+    </select>-->
+    
+       <!-- 정보 게시글 수 카운팅 -->
+    <select id="infoCount" parameterType="com.study.common.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            board
+        WHERE
+            del_yn = 0 AND type = 0 
+            <include refid="search" />
+    </select>
+    
+       <!--자유 게시글 수 카운팅 -->
+    <select id="freeCount" parameterType="com.study.common.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            board
+        WHERE
+            del_yn = 0 AND type = 1 
+            <include refid="search" />
+    </select>
+    
+        <!-- 메인페이지 정보게시글 요약 리스트 조회 -->
+    <select id="summaryInfoList" resultType="com.study.domain.post.PostResponse">
+        SELECT
+			  a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.del_yn = 0 AND a.type = 0 
+        ORDER BY
+            a.created_date DESC
+        LIMIT 5
+    </select>
+    
+            <!-- 메인페이지 정보게시글 요약 리스트 조회 -->
+    <select id="summaryFreeList" parameterType="com.study.domain.post.PostResponse" resultType="com.study.domain.post.PostResponse">
+        SELECT
+			  a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.del_yn = 0 AND a.type = 1 
+        ORDER BY
+            a.created_date DESC
+        LIMIT 5
+    </select>
+    
+    <!-- 마이페이지 나의 글 보기 -->
+    
+    	<!-- 내글리스트 출력 -->
+    <select id="userPostList" parameterType="com.study.common.dto.SearchDto" resultType="com.study.domain.post.PostResponse">
+        SELECT
+			  a.id
+	        , a.type
+	        , a.title
+	        , a.content
+	        , a.writer_no
+	        , a.created_date
+	        , a.modified_date      
+	        , a.del_yn
+	        , a.del_date
+	        , a.notice
+	        , a.count_good
+	        , a.count_bad
+            , b.nickname
+            , b.user_no
+        FROM
+            board as a
+        JOIN
+        	user as b
+        ON
+        	a.writer_no = b.user_no
+        WHERE
+            a.del_yn = 0
+        AND
+        	b.user_no = #{userNo}
+        ORDER BY
+            a.id DESC
+        LIMIT #{pagination.limitStart}, #{recordSize}
+    </select>
+    
+           <!--내 글 수 카운팅 -->
+    <select id="userPostListCount" parameterType="com.study.common.dto.SearchDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            board as a
+        JOIN 
+			user as b
+		ON
+			a.writer_no=b.user_no
+        WHERE
+            a.del_yn = 0
+        AND
+       		b.user_no = #{userNo}
+    </select>
+
+</mapper>

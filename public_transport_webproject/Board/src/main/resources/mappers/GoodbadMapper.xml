@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.domain.goodbad.GoodbadMapper">
+<!-- 추천 눌럿는지 안눌럿는지 -->
+<select id="checkGood" parameterType="com.study.domain.goodbad.GoodbadDTO" resultType="int">
+	select 
+		count(*) 
+	from 
+		good
+	where 
+		board_id = #{boardId}
+	and 
+		user_no = #{userNo}
+	and 
+		goodbad = 1
+</select>
+
+<!-- 비추천 눌럿는지 안눌럿는지 -->
+<select id="checkbad" parameterType="com.study.domain.goodbad.GoodbadDTO" resultType="int">
+	select 
+		count(*) 
+	from 
+		good
+	where 
+		board_id = #{boardId}
+	and 
+		user_no = #{userNo}
+	and 
+		goodbad = 0
+</select>
+
+<!-- 좋아요 눌렀을 때 -->
+<insert id="clickGood" parameterType="com.study.domain.goodbad.GoodbadDTO">
+	insert into good (id ,board_id , user_no, goodbad)
+	values((select * from (select max(id)+1 from good) next), #{boardId},#{userNo},1)
+</insert>
+
+<!-- 좋아요 취소 -->
+<delete id="cancelGood">
+  	delete from good where board_id = #{boardId} and user_no = #{userNo} 
+</delete>
+
+<!-- 좋아요눌렀을 때 게시글의 좋아요 갯수 +1 -->
+<update id="increaseCountGood" parameterType="int">
+	UPDATE 
+		board
+	SET 
+		count_good = count_good + 1
+	WHERE
+		id = #{id}
+</update>
+
+<!-- 좋아요눌렀을 때 게시글의 좋아요 갯수 -1 -->
+<update id="decreaseCountGood" parameterType="int">
+	UPDATE 
+		board
+	SET 
+		count_good = count_good - 1
+	WHERE
+		id = #{id}
+</update>
+
+<!--  비추천 눌렀을 때 -->
+<insert id="clickBad" parameterType="com.study.domain.goodbad.GoodbadDTO">
+	insert into good (id ,board_id , user_no, goodbad)
+	values((select * from (select max(id)+1 from good) next), #{boardId},#{userNo},0)
+</insert>
+
+<!-- 비추천눌렀을 때 게시글의 좋아요 갯수 +1 -->
+<update id="increaseCountBad" parameterType="int">
+	UPDATE 
+		board
+	SET 
+		count_bad = count_bad + 1
+	WHERE
+		id = #{id}
+</update>
+
+<!-- 비추천눌렀을 때 게시글의 좋아요 갯수 -1 -->
+<update id="decreaseCountBad" parameterType="int">
+	UPDATE 
+		board
+	SET 
+		count_bad = count_bad - 1
+	WHERE
+		id = #{id}
+</update>
+</mapper>

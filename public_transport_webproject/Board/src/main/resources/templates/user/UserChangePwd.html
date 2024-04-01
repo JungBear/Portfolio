@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic">
+
+<th:block layout:fragment="title">
+  <title>비밀번호 변경</title>
+</th:block>
+
+<th:block layout:fragment="content">
+	<div class="page_tits">
+		<h3>마이페이지</h3>
+		<p class="path">
+			<strong>현재 위치 :</strong> <span>마이페이지</span> <span>비밀번호 변경</span> 
+		</p>
+	</div>
+	<nav class="navbar navbar-expand-lg bg-light">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserMyPage.do">내정보확인</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/modify.do">내정보수정</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserListMyBoard.do">내 글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/mycommentlist.do">내 댓글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/changepwd.do">비밀번호 변경</a>
+				</li>
+			</ul>
+	</nav>
+	
+	<div class="content">
+		<div class="form-field">
+			<form id="changePwd" autocomplete="off" method="post">
+				<input type="hidden" name="userNo" id="inputUserNo" th:value="${userInfo.userNo}"></input>
+				<input type="password" id="presentPwd"  placeholder="현재 비밀번호" 
+				onkeyup="checkCharOnlyEngNum(event)" minlength="8" maxlength="20"></input>
+				<input type="password" name="pwd" id="newPwd" placeholder="새 비밀번호" minlength="8" maxlength="20" ></input>
+				<input type="password" id="newPwdCheck" minlength="8" maxlength="20" placeholder="새 비밀번호 확인"></input>
+				
+				
+				<button id="changePwdBtn">변경하기</button>
+			</form>
+		</div>
+	</div>
+	
+	
+</th:block>
+
+
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+    	/*<![CDATA[*/
+    		
+    	$('#changePwd').submit(function() {
+    		var pwd= [[ ${userInfo.pwd} ]];
+    		
+    		if($("#presentPwd").val() ==  '' || $("#presentPwd").val() ==  null){
+    			alert("현재 비밀번호를 입력해주세요");
+    			return false;
+    		}
+    		if($("#presentPwd").val() !=  pwd){
+    			alert("현재 비밀번호가 올바르지 않습니다");
+    			return false;
+    		}
+    		if($("#newPwd").val() ==  '' || $("#newPwd").val() ==  null){
+    			alert("새 비밀번호를 입력해주세요");
+    			return false;
+    		}
+    		if($("#newPwdCheck").val() ==  '' || $("#newPwdCheck").val() ==  null){
+    			alert("새 비밀번호 확인을 입력해주세요");
+    			return false;
+    		}
+    		if($("#newPwd").val() != $("#newPwdCheck").val()){
+    			alert("새 비밀번호가 일치하지 않습니다");
+    			return false;
+    		}
+    		if($("#newPwd").val().length<8 || $("#newPwd").val().length>20){
+    			alert($("#newPwd").val());
+    			alert($("#newPwd").val().length);
+    			alert("비밀번호 글자수는 8~20글자입니다");
+    			return false;
+    		}
+    		if($("#presentPwd").val() == $("#newPwd").val()){
+    			alert("현재비밀번호와 새 비밀번호가 같습니다.");
+    			return false;
+    		}
+    		
+	
+    	});
+    	
+		function checkCharOnlyEngNum(event){
+			const regExpId = /[^0-9a-zA-Z]/g;
+			const eleId = event.target;
+			if (regExpId.test(eleId.value)) { /* true / false를 반환한다. */
+				eleId.value = eleId.value.replace(regExpId, '');
+			}
+		};
+    	  	
+    	/*]]>*/
+	</script>
+</th:block>
+</html>

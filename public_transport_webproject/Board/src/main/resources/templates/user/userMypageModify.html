@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/basic}">
+
+<th:block layout:fragment="title">
+  <title>마이 페이지 MyPage</title>
+</th:block>
+<th:block layout:fragment="content">
+	<div class="page_tits">
+		<h3>마이페이지</h3>
+		<p class="path">
+			<strong>현재 위치 :</strong> <span>마이페이지</span> <span>내 정보 수정</span> 
+		</p>
+	</div>
+	<nav class="navbar navbar-expand-lg bg-light">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserMyPage.do">내정보확인</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/modify.do">내정보수정</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/UserListMyBoard.do">내 글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/mycommentlist.do">내 댓글 보기</a>
+				</li>
+				<li class="navbar-brand">
+					<a class="nav-link" href="/user/changepwd.do">비밀번호 변경</a>
+				</li>
+			</ul>
+	</nav>
+	<div class="content5">			
+		<section>
+			<form class="modifyUserInfo" id="modifyUserInfo" method="post" autocomplete="off">
+				
+				<input type="hidden" name="userNo"  class="inputUserInfo" id="inputUserNo" th:value="${userInfo.userNo}"></input>
+				
+				<label class="modifyIdLabel">*아이디</label>
+				<span class="modifyIdSpan"  style="color:red">수정불가</span>
+				<input type="text" name="id" class="inputUserInfo" id="inputId"  readonly th:value="${userInfo.id}"></input>
+				
+				<label class="modifyNicknameLabel">*닉네임</label>
+				<span class="modifyNicknameSpan"  style="color:red">수정불가</span>
+				<input type="text" name="nickname" class="inputUserInfo" id="inputNickname"  readonly th:value="${userInfo.nickname}"></input>
+				
+				<label class="modifyPwdHintLabel">*비밀번호 힌트</label>
+				<span class="modifyPwdHintSpan"  style="color:blue">수정가능</span>
+				<select name="PwdHint" id="inputPwdHint" class="inputUserInfo"  th:value="${userInfo.pwdHint}" required>
+		        	<option th:selected="${userInfo.pwdHint}=='자신의 보물 1호는?'">자신의 보물 1호는?</option>
+		        	<option th:selected="${userInfo.pwdHint}=='아버지 성함은?'">아버지 성함은?</option>
+		     	</select>
+				
+				<label class="modifyPwdHintAnsLabel">*비밀번호 답</label>
+				<span class="modifyPwdHintAnsSpan"  style="color:blue">수정가능</span>
+				<input type="text" name="pwdHintAns" class="inputUserInfo" id="inputPwdHintAns" th:value="${userInfo.pwdHintAns}" required></input>
+				
+				<label class="modifyEmailLabel">*이메일</label>
+				<span class="modifyEmailSpan"  style="color:blue">수정가능</span>
+				<input type="email" name="email" class="inputUserInfo" id="inputEmail" th:value="${userInfo.email}" required></input>
+				
+				<label class="modifyNameLabel">*이름</label>
+				<span class="modifyNameSpan"  style="color:red">수정불가</span>
+				<input type="text" name="userName" class="inputUserInfo" id="inputUserName"  th:value="${userInfo.userName}" readonly></input>
+				
+				<label class="modifyAgeLabel">*생년월일</label>
+				<span class="modifyAgeSpan"  style="color:red">수정불가</span>
+				<input type="date"  class="inputUserInfo" id="inputAge" th:value="${#dates.format(date, 'yyyy-MM-dd')}" readonly></input>
+				
+				<label class="modifyGenderLabel">*성별</label>
+				<span class="modifyGenderSpan"  style="color:red">수정불가</span>
+				<input th:if="${userInfo.gender==0}"type="text" class="inputUserInfo" id="inputId" value="남자"readonly ></input>
+				
+				
+				<input th:unless="${userInfo.gender==0}" type="text" class="inputUserInfo" id="inputId" value="여자" readonly></input>
+				
+				<button type="button" class="modifyButton" onclick="modifyCheck()" id="content-button">수정하기</button>
+			</form>
+		</section> 
+	
+	</div>
+</th:block>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+    	/*<![CDATA[*/
+   		//수정하기전 물어보기 함수
+	    function modifyCheck(){
+	    	if(confirm("정말 수정하시겠습니까??")==true){
+	    		modifyUser();	
+	    	}else{
+	    		return false;
+	    	}
+	    }
+    	
+        function modifyUser() {
+            const form = document.getElementById('modifyUserInfo');
+            form.action = '/user/modify.do';
+            form.submit();
+        }
+    		
+    	/*]]>*/
+	</script>
+</th:block>	
+</html>

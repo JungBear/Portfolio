@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+layout:decorate="~{layout/basic}">
+
+
+<th:block layout:fragment="title">
+  <title>마이 페이지 MyPage</title>
+</th:block>
+
+
+<th:block layout:fragment="content">
+	<div class="page_tits">
+		<h3>마이페이지</h3>
+		<p class="path">
+			<strong>현재 위치 :</strong> <span>마이페이지</span> <span>비밀번호 확인</span>
+		</p>
+	</div>
+	
+	<div class="form-field">
+		<div>	
+			<form name="passwordCheck" autocomplete="off" method="post">
+				
+				<h5>비밀번호 확인</h5>
+					<input type="hidden" id="userNo" name="userNo" th:value="${userInfo.userNo}"></input>
+					<input type="password" id="password" name="pwd" placeholder="비밀번호" required></input>
+					<p id="wrongPwd"></p>
+					<button id=click-confirm 
+					class="btn btn-outline-primary mr-7">비밀번호 확인</button>		
+					
+		
+			</form>
+		</div>
+	</div>
+ 
+	
+</th:block>
+
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+/*	function checkPassword(){	
+		var pwd = $('#password').val();
+		var userNo= [[ ${userInfo.userNo} ]];
+		
+//		alert(pwd);
+//		alert(id);
+	
+//	    alert("uri가져오기전");
+	    var uri = /*[[ @{/user/UserMyPageChk} ]]*//*null;
+	    var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "POST"};
+	    var params = {"pwd": pwd, "userNo":userNo};
+	    	
+//	   	alert(JSON.stringify(params));
+	    	
+	    	
+//	    	alert("아작스전");
+	    	$.ajax({
+	    		url: uri,
+	    		type: "POST",
+	    		headers: headers,
+	    		dataType: "json",
+	    		data: JSON.stringify(params),
+				
+	    		success: function(reponse) {
+	    			location.href="/user/UserMyPage.do";
+	    			
+	    			
+	    		},
+	    		error: function(xhr, status, error) {
+	    			alert("비밀번호가 올바르지않습니다.");
+	    		}
+	    		
+	    	});*/
+	}		
+	/*
+    let frm = $("#frm");
+    function fnSubmit(){
+    	frm.submit();
+    }
+    $(function(){
+    	$("#password").on("keyup",function(e){
+    		if(e.key =="Enter") fnSubmit();
+    	});
+    	frm.validate({
+    		submitHandler: function(form){
+    			//submit action
+    			form.submit();
+    		}
+    	});
+    });
+    */
+    
+    /*]]>*/
+	  </script>
+	</th:block>
+</html>
