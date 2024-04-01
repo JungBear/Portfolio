@@ -93,7 +93,7 @@
 - 담당 업무
   - 기획, 서비스 1, 2, 3의 백엔드,db관리, 배포
 - [웹페이지](http://54.180.149.57:8080/)
-- [PDF]()
+- [PDF](https://github.com/JungBear/Portfolio/blob/main/public_transport_webproject/%EA%B5%90%ED%86%B5_%EC%B5%9C%EC%A2%85.pdf)
 - [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
 
 ---
