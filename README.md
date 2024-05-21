@@ -202,8 +202,6 @@
 - 담당업무 
   - 야생전투, 관장전투
 
-
-## 코드
 - [포켓몬 프로젝트 코드 파일](https://github.com/JungBear/project/tree/main/Pokemon/src)
 
 - - -
@@ -242,8 +240,6 @@
 - 담당업무 
   - 팀장, 메인화면 구현, 발표
 
-
-## 코드
 - [프로젝트 코드](https://github.com/JungBear/javaSwingProject)
 - [PDF](https://github.com/JungBear/javaSwingProject/blob/main/%EC%9B%B9%EA%B0%9C%EB%B0%9C_%EC%9E%90%EB%B0%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8.pdf)
 - [시연영상](https://www.youtube.com/watch?v=5Mt1WUvebmQ)
