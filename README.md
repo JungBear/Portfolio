@@ -25,13 +25,13 @@
   - 기관 : 코리아IT학원 인천점
   - 웹 개발
     - 기간 : 2024년 02월 09일 ~ 
-    - 내용 : HTML & CSS & JS 6주 /
+    - 내용 : HTML & CSS & JS 6주 / JAVA 8주 / SQL 
   - JAVA
     - 기간 : 2024년 03월 13일 ~
     - 내용 : 자바 기초 
   - 프론트엔드
     - 기간 : 2024년 02월 09일 ~ 
-    - 내용 : HTML & CSS & JS / 
+    - 내용 : HTML & CSS & JS / REACT + TYPESCRIPT
 
 - - -
 ## 아르바이트
