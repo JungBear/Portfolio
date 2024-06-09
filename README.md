@@ -36,15 +36,8 @@
 - - -
 
  ## 프로젝트
-1. 자율주행자동차 lv.1
-- 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
-- 기간 : 2021년 03월 ~ 2021년 06월
-- 인원 : 정상필 외 2명
-- 사용언어 : ```Python```
 
-- - -
-
-2. 주택청약 챗봇 프로젝트
+1. 주택청약 챗봇 프로젝트
 - 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
 - 기간 : 2022년 08월 19일 ~ 2022년 09월 02일
 - 인원 : 정상필 외 3명
@@ -67,32 +60,7 @@
 
 - - -
 
-3. 한강의 다리 혼잡도 분석 및 정보, 자유 커뮤니티
-- 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
-- 기간 : 2022년 10월 24일 ~ 2022년 12월 02일
-- 인원 : 정상필 외 3명
-- 사용언어 : ```Java```, ```Python```
-- 사용툴 : ```STS4```, ```Source Tree```, ```DBeaver```
-- 프레임워크 : ```Spring Boot```,```MyBatis```
-- 템플릿엔진 : ```Thymeleaf```
-- DBMS : ```MySQL```
-- 라이브러리 : ```jQuery```,```ajax```, ```lombok```
-- 내용
-  - ```aws```를 이용한 배포 및 ```mySql```을 사용한 DB관리
-  - 서비스1 : 원하는 시각의 한강의 다리(성산대교, 한남대교, 청담대교)들의 혼잡도 예측을 카카오맵으로 출력
-  - 서비스2 : 각종 글과 댓글을 쓸 수 있는 자유게시판과 정보게시판
-  - 서비스3 : 게시글에 대한 추천, 비추천
-- 담당 업무
-  - 기획, 서비스 1, 2, 3의 백엔드,db관리, 배포
-- [웹페이지](http://54.180.149.57:8080/) <- aws의 무료 지원이 종료된 관계로 현재는 불가능
-- [PDF](https://github.com/JungBear/Portfolio/blob/main/public_transport_webproject/%EA%B5%90%ED%86%B5_%EC%B5%9C%EC%A2%85.pdf)
-- [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
-
----
-
-
-### 자바 토이프로젝트
-1.  포켓몬스터 게임 구현 (자바)
+2.  포켓몬스터 게임 구현 (자바)
 - 기간 : 2022.09.22 - 2022.09.26
 - 인원 : 정상필 외 4명
 - 주제 : 포켓몬스터 게임 자바로 간단하게 구현해보기
@@ -196,9 +164,33 @@
 
 - [포켓몬 프로젝트 코드 파일](https://github.com/JungBear/project/tree/main/Pokemon/src)
 
+
 - - -
 
-2.  SWING을 활용한 간단한 홈쇼핑 구현 (자바)
+3. 한강의 다리 혼잡도 분석 및 정보, 자유 커뮤니티
+- 폴더명 : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
+- 기간 : 2022년 10월 24일 ~ 2022년 12월 02일
+- 인원 : 정상필 외 3명
+- 사용언어 : ```Java```, ```Python```
+- 사용툴 : ```STS4```, ```Source Tree```, ```DBeaver```
+- 프레임워크 : ```Spring Boot```,```MyBatis```
+- 템플릿엔진 : ```Thymeleaf```
+- DBMS : ```MySQL```
+- 라이브러리 : ```jQuery```,```ajax```, ```lombok```
+- 내용
+  - ```aws```를 이용한 배포 및 ```mySql```을 사용한 DB관리
+  - 서비스1 : 원하는 시각의 한강의 다리(성산대교, 한남대교, 청담대교)들의 혼잡도 예측을 카카오맵으로 출력
+  - 서비스2 : 각종 글과 댓글을 쓸 수 있는 자유게시판과 정보게시판
+  - 서비스3 : 게시글에 대한 추천, 비추천
+- 담당 업무
+  - 기획, 서비스 1, 2, 3의 백엔드,db관리, 배포
+- [웹페이지](http://54.180.149.57:8080/) <- aws의 무료 지원이 종료된 관계로 현재는 불가능
+- [PDF](https://github.com/JungBear/Portfolio/blob/main/public_transport_webproject/%EA%B5%90%ED%86%B5_%EC%B5%9C%EC%A2%85.pdf)
+- [시연영상](https://www.youtube.com/watch?v=lVMru9opVo8)
+
+- - -
+
+4.  SWING을 활용한 간단한 홈쇼핑 구현 (자바)
 - 기간 : 2024.04.24 - 2024.05.09
 - 인원 : 정상필 외 2명
 - 주제 : SWING을 활용한 로그인, 회원가입, 장바구니 기능이 있는 홈쇼핑 구현
@@ -235,3 +227,5 @@
 - [프로젝트 코드](https://github.com/JungBear/javaSwingProject)
 - [PDF](https://github.com/JungBear/javaSwingProject/blob/main/%EC%9B%B9%EA%B0%9C%EB%B0%9C_%EC%9E%90%EB%B0%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8.pdf)
 - [시연영상](https://www.youtube.com/watch?v=5Mt1WUvebmQ)
+
+- - -
