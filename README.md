@@ -13,30 +13,32 @@
 - 2022년 02월. 청주대 소프트웨어융합학부 인공지능소프트웨어전공 졸업
 
 ## 대외활동
-- AI데이터플랫폼을 활용한 빅데이터 분석전문가 과정 3기
-    - 기간 : 2022년 06월 16일 ~ 2022년 12월 07일 
-    - 기관 : 휴면교육센터
-    - 내용 : Python 기반 데이터 분석 및 챗봇만들기 프로젝트, JAVA 기반 웹 개발 및 프로젝트
-- - -
 - 6개월 프리패스
   - 기간 : 2024년 02월 08일 ~ 2024년 08월 10일
   - 기관 : 코리아IT학원 인천점
   - 웹 개발
     - 기간 : 2024년 02월 09일 ~ 2024년 07월 16일
-    - 내용 : HTML & CSS & JS 6주 / JAVA 8주 / SQL 2주 / SPRING & JSP 4주 / SPIRNGBOOT & THYMELEAF 2주 / 최종 프로젝트 2주
+    - 내용 : HTML & CSS & JS / JAVA / SQL / SPRING & JSP / SPIRNGBOOT & THYMELEAF  / 최종 프로젝트 
   - 프론트엔드
     - 기간 : 2024년 02월 09일 ~ 2024년 08월 10일
-    - 내용 : HTML & CSS & JS 8주 / REACT + TYPESCRIPT 8주 / NEXTJS 4주 / 프로젝트 4주
+    - 내용 : HTML & CSS & JS / REACT + TYPESCRIPT / NEXTJS / 프로젝트 
   - JAVA
     - 기간 : 2024년 03월 13일 ~ 2024년 05월 10일
     - 내용 : 자바 기초 
+- - -
+- AI데이터플랫폼을 활용한 빅데이터 분석전문가 과정 3기
+    - 기간 : 2022년 06월 16일 ~ 2022년 12월 07일 
+    - 기관 : 휴면교육센터
+    - 내용 : Python 기반 데이터 분석 및 챗봇만들기 프로젝트, JAVA 기반 웹 개발 및 프로젝트
+
+
 
 
  ## 프로젝트
 
  
 1. 한강의 다리 혼잡도 분석 및 정보, 자유 커뮤니티
-- repo : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject/tree/main)
+- repo : [public_transport_webproject](https://github.com/JungBear/public_transport_webproject)
 - 기간 : 2022년 10월 24일 ~ 2022년 12월 02일
 - 인원 : 정상필 외 3명
 - 사용언어 : ```Java```, ```Python```
@@ -79,7 +81,7 @@
 ## 토이 프로젝트
 
 1. 주택청약 챗봇 프로젝트
-- 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/project/tree/main/subscoription_chatbot)
+- 폴더명 : [subscoripition_chatbot](https://github.com/JungBear/human-chatbot-subscription)
 - 기간 : 2022년 08월 19일 ~ 2022년 09월 02일
 - 인원 : 정상필 외 3명
 - 사용언어 : ```Python```
