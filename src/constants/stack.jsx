@@ -1,0 +1,15 @@
+export const JAVA = "Java";
+export const SPRING_BOOT = "Spring Boot";
+export const MY_SQL = "My SQL";
+export const THYMELEAF = "Thymeleaf";
+export const REACT = "React.js";
+export const VERCEL = "Vercel";
+export const S3 ="AWS S3";
+export const SPRING_SECURITY = "Spring security";
+export const TAILWIND_CSS = "Tailwind CSS";
+export const REDUX = "Redux";
+export const EC2 = "AWS EC2";
+export const JPA = "Spring Data JPA";
+export const MY_BATIS = "My Batis";
+export const JWT = "JWT";
+export const J_QUERY = "jQuery"
