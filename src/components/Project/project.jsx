@@ -8,6 +8,7 @@ import Text from '../../atom/text';
 import Tag from '../../atom/tag';
 
 const Project = () => {
+    const defaultImg = "/img/project/default.png"
     return (
         <div>
             <Title title={"🛠 PROJECT"} />
@@ -20,7 +21,7 @@ const Project = () => {
                                 <div key={idx} className='group relative cursor-pointer '>
                                     <div className='relative w-full'>
                                         <img
-                                            src={item.imgSrc}
+                                            src={item.imgSrc? item.imgSrc : defaultImg}
                                             alt={item.name}
                                             className="w-full aspect-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none "
                                             onError={(e) => {
