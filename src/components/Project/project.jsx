@@ -23,7 +23,7 @@ const Project = () => {
                                         <img
                                             src={item.imgSrc? item.imgSrc : defaultImg}
                                             alt={item.name}
-                                            className="w-full aspect-1 rounded-md overflow-hidden group-hover:opacity-75 lg:aspect-none "
+                                            className="w-full aspect-1 rounded-md overflow-hidden object-contain group-hover:opacity-75 lg:aspect-none"
                                             onError={(e) => {
                                             e.target.onerror = null;
                                             e.target.src = "/img/project/bg-w.png"; // 플레이스홀더 이미지 경로
