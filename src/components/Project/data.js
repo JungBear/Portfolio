@@ -24,6 +24,13 @@ export const projects = [
                 href: "https://github.com/JungBear/frans?tab=readme-ov-file",
                 imgSrc: "/img/project/logo_slogan.png",
                 tags: [JAVA,SPRING_BOOT, SPRING_SECURITY, MY_SQL, MY_BATIS, THYMELEAF, J_QUERY, GIT, EC2, RDS]
+            },
+            {
+                date: "2022.10 ~ 2022.12",
+                name: "한량",
+                href: "https://github.com/JungBear/public_transport_webproject",
+                imgSrc: "/img/project/bridge.png",
+                tags: [JAVA, SPRING_BOOT, MY_SQL, MY_BATIS, THYMELEAF, J_QUERY, GIT]
             }
         ],
     },
