@@ -6,7 +6,7 @@ import SubText from '../../atom/subText';
 
 const Others = () => {
     return (
-        <div>
+        <div className='mt-5'>
             <Title title={"👀 OTHERS"} />
             <div className='grid grid-cols-1 gap-y-8 mt-5'>
                     {others.map((other, idx)=>(
