@@ -13,3 +13,5 @@ export const JPA = "Spring Data JPA";
 export const MY_BATIS = "My Batis";
 export const JWT = "JWT";
 export const J_QUERY = "jQuery"
+export const RDS = "AWS RDS";
+export const GIT = "git";
