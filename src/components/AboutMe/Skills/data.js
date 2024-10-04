@@ -6,7 +6,6 @@ export const skills = [
             "Spring, Spring Boot, Spring Data JPA",
             "MyBatis",
             "MySQL, Redis",
-            "Junit5",
             "Gradle",
             "IntelliJ, Visual Studio Code, Postman"
         ]
